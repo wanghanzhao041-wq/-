@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>星驰雕塑 — XINGCHI SCULPTURE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,600&family=Noto+Serif+SC:wght@300;400&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#080706;--paper:#f4f0e8;--gold:#c8a050;--goldl:#e0c070;--rust:#7a3a1a;--muted:rgba(244,240,232,.4);}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--paper);font-family:'Noto Serif SC',serif;font-weight:300;overflow-x:hidden;cursor:none;}
+
+#cur{position:fixed;width:6px;height:6px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;}
+#cur-ring{position:fixed;width:32px;height:32px;border:1px solid rgba(200,160,80,.35);border-radius:50%;pointer-events:none;z-index:9998;transition:width .3s,height .3s;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");pointer-events:none;z-index:998;opacity:.4;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:28px 64px;display:flex;justify-content:space-between;align-items:center;}
+nav::before{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,7,6,.75),transparent);pointer-events:none;}
+.logo{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;letter-spacing:8px;color:var(--paper);text-decoration:none;position:relative;z-index:1;}
+.nav-links{display:flex;gap:44px;list-style:none;position:relative;z-index:1;}
+.nav-links a{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .3s;}
+.nav-links a:hover{color:var(--gold);}
+
+/* HERO */
+.hero{height:100vh;position:relative;overflow:hidden;display:flex;align-items:flex-end;}
+.hero-img{position:absolute;inset:0;}
+.hero-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.3) saturate(.6);}
+.hero-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(8,7,6,1) 0%,rgba(8,7,6,.6) 35%,rgba(8,7,6,.1) 100%);}
+.hero-content{position:relative;z-index:2;padding:0 64px 100px;width:100%;}
+.hero-eyebrow{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:8px;color:var(--gold);text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;gap:16px;opacity:0;animation:up 1s ease .3s forwards;}
+.hero-eyebrow::before{content:'';width:40px;height:1px;background:var(--gold);opacity:.4;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(60px,10vw,148px);font-weight:300;line-height:.92;letter-spacing:-2px;margin-bottom:36px;opacity:0;animation:up 1.2s ease .5s forwards;}
+.hero-title em{font-style:italic;color:var(--gold);display:block;}
+.hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;opacity:0;animation:up 1s ease 1s forwards;}
+.hero-desc{font-size:14px;color:var(--muted);line-height:2;max-width:360px;}
+.hero-scroll{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.hero-scroll span{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:4px;color:rgba(244,240,232,.2);writing-mode:vertical-rl;}
+.scroll-bar{width:1px;height:60px;background:linear-gradient(var(--gold),transparent);animation:pulse 2s infinite;}
+@keyframes up{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:.4;}50%{opacity:1;}}
+
+/* MARQUEE */
+.marquee{overflow:hidden;border-top:1px solid rgba(244,240,232,.06);border-bottom:1px solid rgba(244,240,232,.06);padding:18px 0;}
+.marquee-inner{display:flex;white-space:nowrap;animation:march 22s linear infinite;}
+.marquee-inner span{font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:rgba(244,240,232,.18);letter-spacing:4px;padding:0 36px;}
+.marquee-inner .dot{color:var(--gold);font-style:normal;font-size:5px;vertical-align:middle;}
+@keyframes march{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ABOUT */
+.about{display:grid;grid-template-columns:1fr 1fr;min-height:90vh;}
+.about-left{padding:120px 80px;display:flex;flex-direction:column;justify-content:center;}
+.about-right{position:relative;overflow:hidden;}
+.about-right img{width:100%;height:100%;object-fit:cover;filter:brightness(.65) saturate(.8);transition:transform 10s ease;}
+.about-right:hover img{transform:scale(1.04);}
+.about-right::before{content:'';position:absolute;left:0;top:0;bottom:0;width:100px;background:linear-gradient(to right,var(--ink),transparent);z-index:1;}
+.section-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:6px;color:var(--gold);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+.section-label::before{content:'';width:30px;height:1px;background:var(--gold);opacity:.4;}
+.about-title{font-family:'Cormorant Garamond',serif;font-size:50px;font-weight:300;line-height:1.15;margin-bottom:36px;}
+.about-title em{font-style:italic;color:var(--gold);}
+.about-text{font-size:14px;color:rgba(244,240,232,.5);line-height:2.3;margin-bottom:14px;}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:52px;padding-top:52px;border-top:1px solid rgba(244,240,232,.07);}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:var(--gold);line-height:1;}
+.stat-l{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:3px;color:rgba(244,240,232,.3);text-transform:uppercase;margin-top:4px;}
+
+/* WORKS */
+.works{padding:120px 64px;}
+.works-header{display:flex;justify-content:space-between;align-items:flex-end;padding-bottom:40px;margin-bottom:60px;border-bottom:1px solid rgba(244,240,232,.06);}
+.works-title{font-family:'Cormorant Garamond',serif;font-size:70px;font-weight:300;line-height:.95;}
+.works-title em{font-style:italic;color:var(--gold);}
+.works-meta{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(244,240,232,.25);}
+
+.works-grid{display:grid;grid-template-columns:1.8fr 1fr;grid-template-rows:480px 360px;gap:4px;}
+.works-right{display:grid;grid-template-rows:1fr 1fr;gap:4px;}
+.wk{position:relative;overflow:hidden;cursor:none;}
+.wk img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.6) saturate(.7);transition:transform .9s cubic-bezier(.25,.46,.45,.94),filter .6s;}
+.wk:hover img{transform:scale(1.07);filter:brightness(.3) saturate(.5);}
+.wk-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,7,6,.9) 0%,transparent 60%);opacity:0;transition:opacity .4s;}
+.wk:hover .wk-overlay{opacity:1;}
+.wk-info{position:absolute;bottom:0;left:0;right:0;padding:28px 24px;transform:translateY(6px);opacity:0;transition:all .4s;}
+.wk:hover .wk-info{opacity:1;transform:translateY(0);}
+.wk-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;margin-bottom:5px;}
+.wk-meta{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;}
+.wk-tag{position:absolute;top:16px;left:16px;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;color:rgba(244,240,232,.35);border:1px solid rgba(244,240,232,.1);padding:4px 10px;}
+
+/* PHOTO BAND */
+.photo-band{height:55vh;position:relative;overflow:hidden;}
+.photo-band img{width:100%;height:100%;object-fit:cover;filter:brightness(.4) saturate(.6);}
+.photo-band::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,var(--ink) 0%,transparent 25%,transparent 75%,var(--ink) 100%);}
+.photo-band-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;}
+.photo-band-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(22px,3.5vw,48px);font-weight:300;color:rgba(244,240,232,.65);text-align:center;line-height:1.5;}
+
+/* PROCESS */
+.process{background:var(--paper);color:var(--ink);padding:140px 64px;}
+.process-top{display:grid;grid-template-columns:1fr 1fr;gap:80px;margin-bottom:100px;align-items:end;}
+.process-title{font-family:'Cormorant Garamond',serif;font-size:70px;font-weight:300;line-height:.95;color:var(--ink);}
+.process-title em{font-style:italic;color:var(--rust);}
+.process-desc{font-size:15px;color:rgba(12,10,8,.45);line-height:2.2;}
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
+.step{background:#fff;padding:40px 28px;border-top:3px solid rgba(12,10,8,.07);transition:border-color .3s;}
+.step:hover{border-top-color:var(--rust);}
+.step-n{font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:300;color:rgba(12,10,8,.05);line-height:1;margin-bottom:-10px;}
+.step-line{width:32px;height:1px;background:var(--rust);margin-bottom:18px;opacity:.4;}
+.step-title{font-size:16px;font-weight:400;color:var(--ink);margin-bottom:12px;}
+.step-text{font-size:12px;color:rgba(12,10,8,.45);line-height:2;}
+
+/* SHOWCASE - 3 tall images */
+.showcase{display:grid;grid-template-columns:repeat(3,1fr);height:75vh;}
+.sc{position:relative;overflow:hidden;cursor:none;}
+.sc img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.55) saturate(.7);transition:transform .9s ease,filter .6s;}
+.sc:hover img{transform:scale(1.08);filter:brightness(.28);}
+.sc-border{position:absolute;inset:0;border:1px solid rgba(200,160,80,0);transition:border-color .5s;z-index:2;pointer-events:none;}
+.sc:hover .sc-border{border-color:rgba(200,160,80,.25);}
+.sc-info{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:36px 28px;opacity:0;transition:opacity .4s;z-index:1;}
+.sc:hover .sc-info{opacity:1;}
+.sc-num{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;color:rgba(244,240,232,.06);line-height:1;margin-bottom:auto;}
+.sc-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;margin-bottom:8px;}
+.sc-sub{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;}
+
+/* CTA */
+.cta{position:relative;height:65vh;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;}
+.cta-bg{position:absolute;inset:0;}
+.cta-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.18) saturate(.4);}
+.cta-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(200,160,80,.07) 0%,transparent 70%);}
+.cta-inner{position:relative;z-index:2;}
+.cta-pre{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:6px;color:var(--gold);text-transform:uppercase;margin-bottom:24px;}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,7vw,96px);font-weight:300;line-height:.95;margin-bottom:48px;}
+.cta-title em{font-style:italic;color:var(--gold);display:block;}
+.cta-btn{display:inline-flex;align-items:center;gap:14px;padding:18px 44px;border:1px solid rgba(200,160,80,.3);color:var(--gold);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:4px;text-transform:uppercase;text-decoration:none;transition:all .4s;position:relative;overflow:hidden;}
+.cta-btn::before{content:'';position:absolute;inset:0;background:var(--gold);transform:translateX(-100%);transition:transform .4s cubic-bezier(.25,.46,.45,.94);}
+.cta-btn:hover{color:var(--ink);}
+.cta-btn:hover::before{transform:translateX(0);}
+.cta-btn span{position:relative;z-index:1;}
+
+footer{border-top:1px solid rgba(244,240,232,.05);padding:36px 64px;display:flex;justify-content:space-between;align-items:center;}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:16px;letter-spacing:6px;color:rgba(244,240,232,.25);}
+.footer-copy{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;color:rgba(244,240,232,.15);}
+
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .9s ease,transform .9s ease;}
+.reveal.on{opacity:1;transform:none;}
+.d1{transition-delay:.12s;}.d2{transition-delay:.24s;}.d3{transition-delay:.36s;}.d4{transition-delay:.48s;}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<nav>
+  <a href="#" class="logo">星驰</a>
+  <ul class="nav-links">
+    <li><a href="#">作品</a></li>
+    <li><a href="#">工艺</a></li>
+    <li><a href="#">关于</a></li>
+    <li><a href="#">联系</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-img">
+    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1600&q=90" alt="星驰雕塑">
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">曲阳 · 河北 · 中国 · EST. 2008</div>
+    <h1 class="hero-title">星驰<br><em>Sculpture</em></h1>
+    <div class="hero-bottom">
+      <p class="hero-desc">不锈钢景观雕塑 · 定制艺术创作<br>以光影与钢铁，诠释永恒之美</p>
+      <div class="hero-scroll">
+        <div class="scroll-bar"></div>
+        <span>向下</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-inner">
+    <span>镜面不锈钢</span><span class="dot">◆</span><span>景观雕塑</span><span class="dot">◆</span><span>定制艺术</span><span class="dot">◆</span><span>曲阳工厂</span><span class="dot">◆</span><span>国际出口</span><span class="dot">◆</span><span>Mirror Stainless</span><span class="dot">◆</span><span>Bespoke Sculpture</span><span class="dot">◆</span><span>Landscape Art</span><span class="dot">◆</span>
+    <span>镜面不锈钢</span><span class="dot">◆</span><span>景观雕塑</span><span class="dot">◆</span><span>定制艺术</span><span class="dot">◆</span><span>曲阳工厂</span><span class="dot">◆</span><span>国际出口</span><span class="dot">◆</span><span>Mirror Stainless</span><span class="dot">◆</span><span>Bespoke Sculpture</span><span class="dot">◆</span><span>Landscape Art</span><span class="dot">◆</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-left">
+    <div class="section-label reveal">关于星驰</div>
+    <h2 class="about-title reveal d1">以钢铁之姿<br>诠释<em>永恒</em>之美</h2>
+    <p class="about-text reveal d2">星驰雕塑，扎根于中国雕塑之乡河北曲阳，专注不锈钢景观雕塑的设计与制造超过15年。每一件作品，都是对材料极限的一次探索——从毛坯到镜面，从概念到永恒。</p>
+    <p class="about-text reveal d2">作品遍布全球各地的公园、广场、酒店与私人庄园，以独特的光影语言，讲述金属与空间之间的永恒对话。</p>
+    <div class="about-stats reveal d3">
+      <div><div class="stat-n">15+</div><div class="stat-l">年制造经验</div></div>
+      <div><div class="stat-n">800+</div><div class="stat-l">完成作品</div></div>
+      <div><div class="stat-n">40+</div><div class="stat-l">出口国家</div></div>
+      <div><div class="stat-n">∞</div><div class="stat-l">定制可能</div></div>
+    </div>
+  </div>
+  <div class="about-right">
+    <img src="https://images.unsplash.com/photo-1604871000636-074fa5117945?auto=format&fit=crop&w=900&q=85" alt="工匠制作">
+  </div>
+</section>
+
+<!-- WORKS -->
+<section class="works">
+  <div class="works-header reveal">
+    <h2 class="works-title">代表<em>作品</em></h2>
+    <span class="works-meta">— SELECTED WORKS · 2024</span>
+  </div>
+  <div class="works-grid reveal d1">
+    <div class="wk">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=900&q=85" alt="涌">
+      <div class="wk-overlay"></div>
+      <div class="wk-tag">01 / 精选</div>
+      <div class="wk-info">
+        <div class="wk-title">《涌》— 浪潮系列</div>
+        <div class="wk-meta">镜面不锈钢 · 高380cm</div>
+      </div>
+    </div>
+    <div class="works-right">
+      <div class="wk">
+        <img src="https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=700&q=85" alt="圆">
+        <div class="wk-overlay"></div>
+        <div class="wk-tag">02</div>
+        <div class="wk-info">
+          <div class="wk-title">《圆》— 禅意系列</div>
+          <div class="wk-meta">拉丝不锈钢 · 径200cm</div>
+        </div>
+      </div>
+      <div class="wk">
+        <img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=700&q=85" alt="棱">
+        <div class="wk-overlay"></div>
+        <div class="wk-tag">03</div>
+        <div class="wk-info">
+          <div class="wk-title">《棱》— 几何系列</div>
+          <div class="wk-meta">彩色不锈钢 · 高160cm</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO BAND -->
+<div class="photo-band">
+  <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=1600&q=85" alt="">
+  <div class="photo-band-text">
+    <div class="photo-band-quote">「每一道光线落在镜面上<br>都是一幅流动的画」</div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="process-top reveal">
+    <h2 class="process-title">制造<em>工艺</em><br>每一步都是匠心</h2>
+    <p class="process-desc">从一张图纸到一件永恒的装置，全程自主制造，不外包，不妥协，用15年磨砺的工艺确保每件作品达到最高标准。</p>
+  </div>
+  <div class="process-steps">
+    <div class="step reveal"><div class="step-n">01</div><div class="step-line"></div><div class="step-title">设计对话</div><p class="step-text">深度理解场所精神与艺术意图，从概念草图到3D渲染，反复打磨每一个细节。</p></div>
+    <div class="step reveal d1"><div class="step-n">02</div><div class="step-line"></div><div class="step-title">精密切割</div><p class="step-text">激光数控切割，精度误差控制在0.1mm以内，确保每个构件完美契合。</p></div>
+    <div class="step reveal d2"><div class="step-n">03</div><div class="step-line"></div><div class="step-title">手工焊接</div><p class="step-text">氩弧焊接，经验丰富的师傅全程操作，成型后焊缝无痕可见。</p></div>
+    <div class="step reveal d3"><div class="step-n">04</div><div class="step-line"></div><div class="step-title">镜面抛光</div><p class="step-text">从600目到2000目逐步细化，多道工序，最终呈现如镜般极致光洁。</p></div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+<div class="showcase">
+  <div class="sc">
+    <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=700&q=85" alt="">
+    <div class="sc-border"></div>
+    <div class="sc-info">
+      <div class="sc-num">01</div>
+      <div class="sc-title">景观装置</div>
+      <div class="sc-sub">公园 · 广场 · 酒店</div>
+    </div>
+  </div>
+  <div class="sc">
+    <img src="https://images.unsplash.com/photo-1553949345-eb786bb3f7ba?auto=format&fit=crop&w=700&q=85" alt="">
+    <div class="sc-border"></div>
+    <div class="sc-info">
+      <div class="sc-num">02</div>
+      <div class="sc-title">室内艺术</div>
+      <div class="sc-sub">大堂 · 会所 · 私宅</div>
+    </div>
+  </div>
+  <div class="sc">
+    <img src="https://images.unsplash.com/photo-1545987796-200677ee1011?auto=format&fit=crop&w=700&q=85" alt="">
+    <div class="sc-border"></div>
+    <div class="sc-info">
+      <div class="sc-num">03</div>
+      <div class="sc-title">定制创作</div>
+      <div class="sc-sub">概念 · 设计 · 落地</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-bg">
+    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1400&q=80" alt="">
+  </div>
+  <div class="cta-inner">
+    <div class="cta-pre">开始您的项目</div>
+    <h2 class="cta-title">让我们共同创造<em>不朽之作</em></h2>
+    <a href="#" class="cta-btn"><span>联系星驰</span><span>→</span></a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">星驰雕塑 XINGCHI</div>
+  <div class="footer-copy">© 2025 星驰雕塑 · 河北曲阳 · 保留所有权利</div>
+</footer>
+
+<script>
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.transform=`translate(${mx-3}px,${my-3}px)`;
+});
+(function tick(){rx+=(mx-rx-16)*.1;ry+=(my-ry-16)*.1;ring.style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(tick);})();
+document.querySelectorAll('a,.wk,.sc').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.width='54px';ring.style.height='54px';});
+  el.addEventListener('mouseleave',()=>{ring.style.width='32px';ring.style.height='32px';});
+});
+
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+window.addEventListener('scroll',()=>{
+  const s=window.scrollY,h=window.innerHeight;
+  const hc=document.querySelector('.hero-content');
+  const hi=document.querySelector('.hero-img img');
+  if(s<h){
+    if(hc){hc.style.transform=`translateY(${s*.3}px)`;hc.style.opacity=1-s/650;}
+    if(hi){hi.style.transform=`translateY(${s*.12}px)`;}
+  }
+});
+</script>
+</body>
+</html>
