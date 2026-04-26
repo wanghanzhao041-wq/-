@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OUDU SCULPTURE — 欧度雕塑</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,600&family=Noto+Serif+SC:wght@300;400&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0c0b09;
+  --paper: #f5f0e8;
+  --warm: #d4b896;
+  --gold: #c8a050;
+  --rust: #8b4a2a;
+  --silver: #9aa0a8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CUSTOM CURSOR */
+.cursor {
+  position: fixed;
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(200,160,80,.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.25s ease, width 0.3s, height 0.3s;
+  transform: translate(-14px,-14px);
+}
+
+/* NOISE OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  padding: 28px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  mix-blend-mode: normal;
+}
+nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(12,11,9,.8) 0%, transparent 100%);
+  pointer-events: none;
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 6px;
+  color: var(--paper);
+  text-decoration: none;
+  position: relative;
+}
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+  position: relative;
+}
+.nav-links a {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: rgba(245,240,232,.5);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+/* HERO */
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 60%, rgba(139,74,42,.15) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(200,160,80,.08) 0%, transparent 50%);
+}
+
+/* Animated grid lines */
+.grid-lines {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(200,160,80,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,160,80,.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+  animation: gridShift 20s linear infinite;
+}
+@keyframes gridShift {
+  from { transform: translateY(0); }
+  to { transform: translateY(80px); }
+}
+
+.hero-content {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 8px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.3s forwards;
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(64px, 12vw, 160px);
+  font-weight: 300;
+  line-height: 0.9;
+  letter-spacing: -2px;
+  color: var(--paper);
+  opacity: 0;
+  animation: fadeUp 1.2s ease 0.5s forwards;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+  display: block;
+}
+
+.hero-subtitle {
+  font-size: 14px;
+  color: rgba(245,240,232,.4);
+  letter-spacing: 4px;
+  margin-top: 40px;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.9s forwards;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  animation: fadeUp 1s ease 1.4s forwards;
+}
+.hero-scroll span {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: rgba(245,240,232,.3);
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.2); }
+}
+
+/* Large decorative number */
+.hero-num {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 280px;
+  font-weight: 300;
+  color: rgba(245,240,232,.03);
+  line-height: 1;
+  user-select: none;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ABOUT SECTION */
+.about {
+  padding: 160px 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 120px;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.about-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 5px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.about-label::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.4;
+}
+
+.about-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 32px;
+}
+.about-title em { font-style: italic; color: var(--gold); }
+
+.about-text {
+  font-size: 15px;
+  color: rgba(245,240,232,.55);
+  line-height: 2.2;
+  margin-bottom: 16px;
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 48px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(245,240,232,.08);
+}
+
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: rgba(245,240,232,.35);
+  text-transform: uppercase;
+}
+
+/* Right visual */
+.about-visual {
+  position: relative;
+}
+
+.about-img-frame {
+  position: relative;
+  height: 600px;
+  background: linear-gradient(135deg, rgba(139,74,42,.2), rgba(200,160,80,.1));
+  border: 1px solid rgba(200,160,80,.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.about-img-frame::before {
+  content: '';
+  position: absolute;
+  inset: 20px;
+  border: 1px solid rgba(200,160,80,.06);
+}
+
+/* SVG sculpture simulation */
+.sculpture-svg {
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 0 40px rgba(200,160,80,.2));
+  animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-12px) rotate(1deg); }
+  66% { transform: translateY(-6px) rotate(-0.5deg); }
+}
+
+.about-img-year {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 80px;
+  font-weight: 300;
+  color: rgba(200,160,80,.1);
+  line-height: 1;
+}
+
+/* WORKS SECTION */
+.works {
+  padding: 120px 60px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 80px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgba(245,240,232,.08);
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px;
+  font-weight: 300;
+  line-height: 1;
+}
+.section-title em { font-style: italic; color: var(--gold); }
+
+.section-count {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(245,240,232,.3);
+}
+
+.works-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 3px;
+}
+
+.work-card {
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+}
+
+.work-card:first-child {
+  grid-row: 1 / 3;
+  height: 680px;
+}
+
+.work-card:not(:first-child) {
+  height: 338px;
+}
+
+.work-bg {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.work-card:hover .work-bg {
+  transform: scale(1.06);
+}
+
+/* SVG artwork placeholders */
+.work-visual {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.work-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(12,11,9,.9) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.work-card:hover .work-overlay { opacity: 1; }
+
+.work-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 32px 28px;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+.work-card:hover .work-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.work-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 300;
+  margin-bottom: 6px;
+}
+.work-meta {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+/* PROCESS */
+.process {
+  background: var(--paper);
+  color: var(--ink);
+  padding: 160px 60px;
+}
+
+.process-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.process-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 80px;
+  font-weight: 300;
+  line-height: 0.9;
+  margin-bottom: 100px;
+  color: var(--ink);
+}
+.process-title em { font-style: italic; color: var(--rust); }
+
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 60px;
+}
+
+.process-step {
+  position: relative;
+}
+
+.step-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 96px;
+  font-weight: 300;
+  color: rgba(12,11,9,.06);
+  line-height: 1;
+  margin-bottom: -20px;
+}
+
+.step-line {
+  width: 40px;
+  height: 1px;
+  background: var(--rust);
+  margin-bottom: 20px;
+  opacity: 0.4;
+}
+
+.step-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 14px;
+  color: var(--ink);
+}
+
+.step-text {
+  font-size: 13px;
+  line-height: 2;
+  color: rgba(12,11,9,.55);
+}
+
+/* CONTACT */
+.contact {
+  padding: 160px 60px;
+  max-width: 1400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contact-pre {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+
+.contact-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 8vw, 100px);
+  font-weight: 300;
+  line-height: 0.95;
+  margin-bottom: 60px;
+}
+.contact-title em { font-style: italic; color: var(--gold); display: block; }
+
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 48px;
+  border: 1px solid rgba(200,160,80,.3);
+  color: var(--gold);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.contact-btn:hover {
+  color: var(--ink);
+}
+.contact-btn:hover::before { transform: translateX(0); }
+
+.contact-btn span { position: relative; z-index: 1; }
+
+.contact-arrow {
+  position: relative;
+  z-index: 1;
+  font-size: 18px;
+  transition: transform 0.3s;
+}
+.contact-btn:hover .contact-arrow { transform: translateX(6px); }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid rgba(245,240,232,.06);
+  padding: 40px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  letter-spacing: 6px;
+  color: rgba(245,240,232,.3);
+}
+
+.footer-copy {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: rgba(245,240,232,.2);
+}
+
+/* SCROLL REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
+.reveal-delay-4 { transition-delay: 0.6s; }
+
+/* Horizontal marquee */
+.marquee-section {
+  overflow: hidden;
+  border-top: 1px solid rgba(245,240,232,.06);
+  border-bottom: 1px solid rgba(245,240,232,.06);
+  padding: 24px 0;
+  background: rgba(200,160,80,.03);
+}
+
+.marquee-track {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee 20s linear infinite;
+}
+
+.marquee-track span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-style: italic;
+  color: rgba(245,240,232,.25);
+  letter-spacing: 4px;
+  padding: 0 40px;
+}
+
+.marquee-track .dot {
+  color: var(--gold);
+  font-style: normal;
+  font-size: 6px;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="#" class="nav-logo">OUDU</a>
+  <ul class="nav-links">
+    <li><a href="#">作品</a></li>
+    <li><a href="#">工艺</a></li>
+    <li><a href="#">关于</a></li>
+    <li><a href="#">联系</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="grid-lines"></div>
+  <div class="hero-num">欧</div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">曲阳 · 河北 · 中国 · EST. 2008</div>
+    <h1 class="hero-title">
+      OUDU
+      <em>Sculpture</em>
+    </h1>
+    <p class="hero-subtitle">不锈钢雕塑 · 景观艺术 · 定制创作</p>
+  </div>
+  <div class="hero-scroll">
+    <span>向下探索</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span>镜面不锈钢</span><span class="dot">◆</span>
+    <span>景观雕塑</span><span class="dot">◆</span>
+    <span>定制艺术</span><span class="dot">◆</span>
+    <span>曲阳工厂</span><span class="dot">◆</span>
+    <span>国际出口</span><span class="dot">◆</span>
+    <span>Mirror Stainless</span><span class="dot">◆</span>
+    <span>Landscape Art</span><span class="dot">◆</span>
+    <span>Custom Sculpture</span><span class="dot">◆</span>
+    <span>镜面不锈钢</span><span class="dot">◆</span>
+    <span>景观雕塑</span><span class="dot">◆</span>
+    <span>定制艺术</span><span class="dot">◆</span>
+    <span>曲阳工厂</span><span class="dot">◆</span>
+    <span>国际出口</span><span class="dot">◆</span>
+    <span>Mirror Stainless</span><span class="dot">◆</span>
+    <span>Landscape Art</span><span class="dot">◆</span>
+    <span>Custom Sculpture</span><span class="dot">◆</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-left">
+    <div class="about-label reveal">关于我们</div>
+    <h2 class="about-title reveal reveal-delay-1">
+      以钢铁诠释<em>永恒</em>之美
+    </h2>
+    <p class="about-text reveal reveal-delay-2">
+      欧度雕塑，扎根于中国雕塑之乡河北曲阳，专注不锈钢景观雕塑的设计与制造超过15年。
+      每一件作品都是一次对材料极限的探索——从毛坯到镜面，从概念到永恒。
+    </p>
+    <p class="about-text reveal reveal-delay-2">
+      我们的作品遍布全球各地的公园、广场、酒店与私人庄园，
+      以独特的光影语言讲述着金属与空间之间的永恒对话。
+    </p>
+    <div class="about-stats reveal reveal-delay-3">
+      <div>
+        <div class="stat-num">15+</div>
+        <div class="stat-label">年制造经验</div>
+      </div>
+      <div>
+        <div class="stat-num">800+</div>
+        <div class="stat-label">完成作品</div>
+      </div>
+      <div>
+        <div class="stat-num">40+</div>
+        <div class="stat-label">出口国家</div>
+      </div>
+      <div>
+        <div class="stat-num">∞</div>
+        <div class="stat-label">定制可能</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-visual reveal reveal-delay-2">
+    <div class="about-img-frame">
+      <svg class="sculpture-svg" width="240" height="320" viewBox="0 0 240 320">
+        <!-- Abstract sculpture form -->
+        <defs>
+          <linearGradient id="sculpt1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#e8e0d0;stop-opacity:.9"/>
+            <stop offset="50%" style="stop-color:#c8a050;stop-opacity:.7"/>
+            <stop offset="100%" style="stop-color:#8b6a30;stop-opacity:.5"/>
+          </linearGradient>
+          <filter id="blur1"><feGaussianBlur stdDeviation="2"/></filter>
+        </defs>
+        <!-- Base -->
+        <ellipse cx="120" cy="300" rx="70" ry="10" fill="rgba(200,160,80,.15)" filter="url(#blur1)"/>
+        <!-- Body -->
+        <path d="M80 280 Q60 200 90 140 Q110 80 120 40 Q130 80 150 140 Q180 200 160 280 Z" fill="url(#sculpt1)" opacity=".8"/>
+        <!-- Reflection highlight -->
+        <path d="M100 260 Q85 190 105 140 Q115 100 120 60" stroke="rgba(255,255,255,.4)" stroke-width="2" fill="none"/>
+        <!-- Second form -->
+        <path d="M60 270 Q40 210 70 160 Q85 120 95 90 Q100 120 90 160 Q85 210 90 270 Z" fill="url(#sculpt1)" opacity=".4" transform="rotate(-15, 80, 180)"/>
+        <!-- Shine point -->
+        <circle cx="108" cy="120" r="4" fill="rgba(255,255,255,.6)"/>
+        <circle cx="108" cy="120" r="12" fill="rgba(255,255,255,.1)"/>
+      </svg>
+      <div class="about-img-year">15</div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKS -->
+<section class="works">
+  <div class="section-header reveal">
+    <h2 class="section-title">代表<em>作品</em></h2>
+    <span class="section-count">— 精选系列 / 2024</span>
+  </div>
+
+  <div class="works-grid">
+    <!-- Card 1 - Large -->
+    <div class="work-card" style="background:#0a0a0a; overflow:hidden;">
+      <div class="work-visual" style="position:relative;width:100%;height:100%;overflow:hidden;">
+        <img src="https://images.unsplash.com/photo-1620503374956-c942862f0372?auto=format&fit=crop&w=800&q=85" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.6) saturate(.8);transition:transform .8s ease;" class="work-bg" alt="雕塑作品1">
+        <svg width="0" height="0" viewBox="0 0 0 0">
+          <defs>
+            <radialGradient id="g1" cx="40%" cy="30%">
+              <stop offset="0%" style="stop-color:#e8e0d0;stop-opacity:1"/>
+              <stop offset="100%" style="stop-color:#8b6030;stop-opacity:.4"/>
+            </radialGradient>
+          </defs>
+          <ellipse cx="100" cy="380" rx="60" ry="8" fill="rgba(200,160,80,.1)"/>
+          <path d="M60 360 Q20 280 40 180 Q60 80 100 20 Q140 80 160 180 Q180 280 140 360 Z" fill="url(#g1)"/>
+          <path d="M85 340 Q55 270 65 180 Q75 100 100 40" stroke="rgba(255,255,255,.35)" stroke-width="1.5" fill="none"/>
+          <circle cx="88" cy="90" r="5" fill="rgba(255,255,255,.7)"/>
+        </svg>
+      </div>
+      <div class="work-overlay"></div>
+      <div class="work-info">
+        <div class="work-title">《涌》— 浪潮系列</div>
+        <div class="work-meta">镜面不锈钢 · 高380cm</div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="work-card" style="background:linear-gradient(160deg,#0f1a2a,#1a3040);">
+      <div class="work-visual">
+        <svg width="120" height="200" viewBox="0 0 120 200">
+          <defs>
+            <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#bdc8d8"/>
+              <stop offset="100%" style="stop-color:#4a6080"/>
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="80" r="55" fill="none" stroke="url(#g2)" stroke-width="2"/>
+          <circle cx="60" cy="80" r="35" fill="url(#g2)" opacity=".3"/>
+          <circle cx="60" cy="80" r="15" fill="url(#g2)" opacity=".7"/>
+          <line x1="60" y1="25" x2="60" y2="135" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+          <line x1="5" y1="80" x2="115" y2="80" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+          <rect x="50" y="135" width="20" height="55" fill="url(#g2)" opacity=".4"/>
+        </svg>
+      </div>
+      <div class="work-overlay"></div>
+      <div class="work-info">
+        <div class="work-title">《圆》— 禅意系列</div>
+        <div class="work-meta">拉丝不锈钢 · 直径200cm</div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="work-card" style="background:linear-gradient(160deg,#1a0f0a,#2e1808);">
+      <div class="work-visual">
+        <svg width="120" height="200" viewBox="0 0 120 200">
+          <defs>
+            <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#d4a860"/>
+              <stop offset="100%" style="stop-color:#8b4a20"/>
+            </linearGradient>
+          </defs>
+          <polygon points="60,10 110,100 85,190 35,190 10,100" fill="url(#g3)" opacity=".6"/>
+          <polygon points="60,30 95,100 75,175 45,175 25,100" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+          <circle cx="60" cy="95" r="8" fill="rgba(255,255,255,.5)"/>
+        </svg>
+      </div>
+      <div class="work-overlay"></div>
+      <div class="work-info">
+        <div class="work-title">《棱》— 几何系列</div>
+        <div class="work-meta">彩色不锈钢 · 高160cm</div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="work-card" style="background:linear-gradient(160deg,#0a1a0a,#152015);">
+      <div class="work-visual">
+        <svg width="180" height="200" viewBox="0 0 180 200">
+          <defs>
+            <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#a0c8a0"/>
+              <stop offset="100%" style="stop-color:#406040"/>
+            </linearGradient>
+          </defs>
+          <!-- Bird form -->
+          <ellipse cx="90" cy="100" rx="70" ry="45" fill="url(#g4)" opacity=".7"/>
+          <path d="M20 95 Q5 80 10 65 Q40 85 90 80" fill="url(#g4)" opacity=".5"/>
+          <path d="M155 88 Q180 70 175 55 Q150 75 90 80" fill="url(#g4)" opacity=".4"/>
+          <ellipse cx="60" cy="88" rx="5" ry="6" fill="rgba(255,255,255,.5)"/>
+          <path d="M75 110 Q90 140 110 145 Q125 140 130 110" fill="url(#g4)" opacity=".6"/>
+          <rect x="86" y="145" width="8" height="40" fill="url(#g4)" opacity=".4"/>
+        </svg>
+      </div>
+      <div class="work-overlay"></div>
+      <div class="work-info">
+        <div class="work-title">《翔》— 生命系列</div>
+        <div class="work-meta">镜面不锈钢 · 展翅220cm</div>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="work-card" style="background:linear-gradient(160deg,#1a1020,#2a1840);">
+      <div class="work-visual">
+        <svg width="120" height="200" viewBox="0 0 120 200">
+          <defs>
+            <linearGradient id="g5" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#c8b0e0"/>
+              <stop offset="100%" style="stop-color:#6840a0"/>
+            </linearGradient>
+          </defs>
+          <path d="M60 10 L110 60 L90 130 L60 190 L30 130 L10 60 Z" fill="url(#g5)" opacity=".6"/>
+          <path d="M60 30 L95 65 L78 120 L60 165 L42 120 L25 65 Z" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
+          <path d="M60 60 L80 80 L72 110 L60 130 L48 110 L40 80 Z" fill="url(#g5)" opacity=".4"/>
+          <circle cx="60" cy="100" r="6" fill="rgba(255,255,255,.6)"/>
+        </svg>
+      </div>
+      <div class="work-overlay"></div>
+      <div class="work-info">
+        <div class="work-title">《棱镜》— 光学系列</div>
+        <div class="work-meta">彩色渐变钢 · 高200cm</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="process-inner">
+    <h2 class="process-title reveal">
+      制造<em>工艺</em><br>每一步都是匠心
+    </h2>
+    <div class="process-steps">
+      <div class="process-step reveal">
+        <div class="step-num">01</div>
+        <div class="step-line"></div>
+        <div class="step-title">设计对话</div>
+        <p class="step-text">与客户深度沟通，理解场所精神与艺术意图，从概念草图到3D渲染，确认每一个细节。</p>
+      </div>
+      <div class="process-step reveal reveal-delay-1">
+        <div class="step-num">02</div>
+        <div class="step-line"></div>
+        <div class="step-title">精密切割</div>
+        <p class="step-text">采用激光数控切割，精度误差控制在0.1mm以内，确保每个构件的完美契合。</p>
+      </div>
+      <div class="process-step reveal reveal-delay-2">
+        <div class="step-num">03</div>
+        <div class="step-line"></div>
+        <div class="step-title">手工焊接</div>
+        <p class="step-text">经验丰富的焊接师傅手工操作，氩弧焊接，焊缝精细处理，成型后无痕迹可见。</p>
+      </div>
+      <div class="process-step reveal reveal-delay-3">
+        <div class="step-num">04</div>
+        <div class="step-line"></div>
+        <div class="step-title">镜面抛光</div>
+        <p class="step-text">多道抛光工序，从600目到2000目逐步细化，最终呈现如镜面般的光洁质感。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact">
+  <div class="contact-pre reveal">开始您的项目</div>
+  <h2 class="contact-title reveal reveal-delay-1">
+    让我们共同创造
+    <em>不朽之作</em>
+  </h2>
+  <a href="#" class="contact-btn reveal reveal-delay-2">
+    <span>联系我们</span>
+    <span class="contact-arrow">→</span>
+  </a>
+</section>
+
+<footer>
+  <div class="footer-logo">OUDU SCULPTURE</div>
+  <div class="footer-copy">© 2025 欧度雕塑 · 河北曲阳 · 保留所有权利</div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  cursor.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
+});
+
+function animateRing() {
+  ringX += (mouseX - ringX - 18) * 0.12;
+  ringY += (mouseY - ringY - 18) * 0.12;
+  cursorRing.style.transform = `translate(${ringX}px, ${ringY}px)`;
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+document.querySelectorAll('a, .work-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform += ' scale(2)';
+    cursorRing.style.width = '60px';
+    cursorRing.style.height = '60px';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursorRing.style.width = '36px';
+    cursorRing.style.height = '36px';
+  });
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+reveals.forEach(el => observer.observe(el));
+
+// Parallax on hero
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  const heroContent = document.querySelector('.hero-content');
+  if (heroContent) {
+    heroContent.style.transform = `translateY(${scrollY * 0.4}px)`;
+    heroContent.style.opacity = 1 - scrollY / 600;
+  }
+});
+</script>
+
+<script>
+// Inject real images into work cards
+const workImages = [
+  "https://images.unsplash.com/photo-1620503374956-c942862f0372?auto=format&fit=crop&w=800&q=85",
+  "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=85",
+  "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=600&q=85",
+  "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=600&q=85",
+  "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=600&q=85"
+];
+document.querySelectorAll('.work-visual').forEach((el, i) => {
+  if (workImages[i]) {
+    const img = document.createElement('img');
+    img.src = workImages[i];
+    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.45) saturate(.7);transition:filter .6s,transform .8s cubic-bezier(.25,.46,.45,.94);';
+    img.className = 'work-bg-img';
+    el.style.position = 'relative';
+    el.style.overflow = 'hidden';
+    el.insertBefore(img, el.firstChild);
+  }
+});
+document.querySelectorAll('.work-card').forEach(card => {
+  card.addEventListener('mouseenter', () => {
+    const img = card.querySelector('.work-bg-img');
+    if (img) { img.style.filter = 'brightness(.3) saturate(.5)'; img.style.transform = 'scale(1.08)'; }
+  });
+  card.addEventListener('mouseleave', () => {
+    const img = card.querySelector('.work-bg-img');
+    if (img) { img.style.filter = 'brightness(.45) saturate(.7)'; img.style.transform = 'scale(1)'; }
+  });
+});
+
+// Inject about section image
+const aboutFrame = document.querySelector('.about-img-frame');
+if (aboutFrame) {
+  const img = document.createElement('img');
+  img.src = 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=700&q=85';
+  img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.5) saturate(.7);z-index:0;';
+  aboutFrame.insertBefore(img, aboutFrame.firstChild);
+  const svg = aboutFrame.querySelector('svg');
+  if (svg) svg.style.position = 'relative';
+}
+</script>
+</body>
+</html>

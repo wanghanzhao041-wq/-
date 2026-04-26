@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YUNJI TEA — 云际茶</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Noto+Serif+SC:wght@300;400;600&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --earth: #1c1812;
+  --clay: #3d2e1e;
+  --sage: #5a7058;
+  --moss: #3d5c3a;
+  --cream: #f5f0e6;
+  --warm: #e8dcc8;
+  --amber: #c8883a;
+  --gold: #d4a84a;
+  --mist: rgba(245,240,230,.45);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--earth);
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  padding: 0 56px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  mix-blend-mode: normal;
+  transition: background .4s, box-shadow .4s;
+}
+nav.scrolled {
+  background: rgba(245,240,230,.92);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 1px 0 rgba(60,46,30,.08);
+}
+
+.nav-logo {
+  font-family: 'Lora', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--earth);
+  text-decoration: none;
+  letter-spacing: 3px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.nav-links a {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(28,24,18,.5);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color .3s;
+}
+.nav-links a:hover { color: var(--amber); }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.nav-cart {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(28,24,18,.5);
+  text-decoration: none;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cart-badge {
+  width: 18px; height: 18px;
+  background: var(--amber);
+  color: white;
+  border-radius: 50%;
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* HERO */
+.hero {
+  height: 100vh;
+  background: var(--earth);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* Background mountain/tea field SVG */
+.hero-bg-visual {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+}
+
+.hero-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(28,24,18,.3) 0%,
+    rgba(28,24,18,.1) 40%,
+    rgba(28,24,18,.7) 75%,
+    rgba(28,24,18,.95) 100%
+  );
+  z-index: 1;
+}
+
+/* Animated mist layers */
+.mist-layer {
+  position: absolute;
+  bottom: 0;
+  width: 200%;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center bottom, rgba(245,240,230,.06) 0%, transparent 70%);
+  animation: mistDrift linear infinite;
+}
+.mist-layer:nth-child(1) { animation-duration: 25s; bottom: 200px; }
+.mist-layer:nth-child(2) { animation-duration: 18s; bottom: 100px; opacity: .6; animation-direction: reverse; }
+.mist-layer:nth-child(3) { animation-duration: 32s; bottom: 50px; opacity: .4; }
+
+@keyframes mistDrift {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0%); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 80px 100px;
+  width: 100%;
+}
+
+.hero-eyebrow {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  opacity: 0;
+  animation: heroFadeUp 1s ease .3s forwards;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 30px;
+  height: 1px;
+  background: var(--gold);
+  opacity: .5;
+}
+
+.hero-title {
+  font-family: 'Lora', serif;
+  font-size: clamp(52px, 9vw, 120px);
+  font-weight: 400;
+  color: var(--cream);
+  line-height: 1.0;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: heroFadeUp 1.2s ease .5s forwards;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+.hero-title .block { display: block; }
+
+.hero-tagline {
+  font-size: 15px;
+  color: rgba(245,240,230,.5);
+  letter-spacing: 2px;
+  margin-bottom: 48px;
+  max-width: 400px;
+  line-height: 1.9;
+  opacity: 0;
+  animation: heroFadeUp 1s ease .8s forwards;
+}
+
+.hero-cta-row {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  opacity: 0;
+  animation: heroFadeUp 1s ease 1.1s forwards;
+}
+
+.btn-leaf {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 36px;
+  background: var(--sage);
+  color: var(--cream);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all .4s;
+  position: relative;
+  overflow: hidden;
+}
+.btn-leaf::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--moss);
+  transform: translateX(-100%);
+  transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+}
+.btn-leaf:hover::before { transform: translateX(0); }
+.btn-leaf span { position: relative; z-index: 1; }
+
+.btn-outline-cream {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(245,240,230,.5);
+  text-decoration: none;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(245,240,230,.25);
+  padding-bottom: 4px;
+  transition: all .3s;
+}
+.btn-outline-cream:hover { color: var(--cream); border-color: var(--cream); }
+
+/* Hero right - floating product */
+.hero-product {
+  position: absolute;
+  right: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  animation: productFloat 7s ease-in-out infinite;
+}
+@keyframes productFloat {
+  0%, 100% { transform: translateY(-50%) translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-50%) translateY(-15px) rotate(2deg); }
+  66% { transform: translateY(-50%) translateY(-8px) rotate(-1deg); }
+}
+
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* SCROLL INDICATOR */
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  right: 80px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  animation: heroFadeUp 1s ease 1.5s forwards;
+}
+.scroll-indicator span {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: rgba(245,240,230,.3);
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+}
+.scroll-line-v {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: vLinePulse 2.5s ease-in-out infinite;
+}
+@keyframes vLinePulse {
+  0%, 100% { opacity: .4; }
+  50% { opacity: 1; }
+}
+
+/* FEATURED PRODUCTS */
+.featured {
+  padding: 140px 80px;
+  background: var(--cream);
+}
+
+.featured-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 80px;
+}
+
+.section-label {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: var(--amber);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Lora', serif;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--earth);
+}
+.section-title em { font-style: italic; color: var(--amber); }
+
+.view-all {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(28,24,18,.4);
+  text-decoration: none;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(28,24,18,.2);
+  padding-bottom: 4px;
+  transition: all .3s;
+}
+.view-all:hover { color: var(--amber); border-color: var(--amber); }
+
+.products-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.product-card {
+  cursor: pointer;
+}
+
+.product-img {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24px;
+  background: var(--warm);
+}
+
+.product-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(28,24,18,.0);
+  transition: background .5s;
+}
+.product-card:hover .product-img::after {
+  background: rgba(28,24,18,.15);
+}
+
+.product-img img {
+  width: 100%;
+  display: block;
+  transition: transform .8s cubic-bezier(.25,.46,.45,.94);
+}
+.product-card:hover .product-img img {
+  transform: scale(1.06);
+}
+
+.product-img-placeholder {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .8s cubic-bezier(.25,.46,.45,.94);
+}
+.product-card:hover .product-img-placeholder { transform: scale(1.06); }
+
+.product-badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 2;
+  padding: 5px 14px;
+  background: var(--amber);
+  color: white;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.product-cat {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: var(--amber);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.product-name {
+  font-family: 'Lora', serif;
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 8px;
+  color: var(--earth);
+  transition: color .3s;
+}
+.product-card:hover .product-name { color: var(--amber); }
+
+.product-desc {
+  font-size: 13px;
+  color: rgba(28,24,18,.5);
+  line-height: 1.9;
+  margin-bottom: 16px;
+}
+
+.product-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid rgba(28,24,18,.08);
+}
+
+.product-price {
+  font-family: 'Lora', serif;
+  font-size: 20px;
+  color: var(--earth);
+}
+
+.product-btn {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: rgba(28,24,18,.4);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color .3s;
+}
+.product-btn:hover { color: var(--amber); }
+
+/* STORY SECTION */
+.story {
+  background: var(--earth);
+  color: var(--cream);
+  padding: 160px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 120px;
+  align-items: center;
+}
+
+.story-visual {
+  position: relative;
+}
+
+.story-img-main {
+  height: 560px;
+  background: linear-gradient(160deg, var(--clay), var(--moss));
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.story-img-float {
+  position: absolute;
+  bottom: -40px;
+  right: -40px;
+  width: 200px;
+  height: 200px;
+  background: var(--amber);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.story-img-float-text {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 32px;
+  color: white;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.story-label {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.story-label::before { content: ''; width: 30px; height: 1px; background: var(--gold); opacity: .5; }
+
+.story-title {
+  font-family: 'Lora', serif;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 32px;
+}
+.story-title em { font-style: italic; color: var(--gold); }
+
+.story-text {
+  font-size: 15px;
+  color: rgba(245,240,230,.5);
+  line-height: 2.2;
+  margin-bottom: 16px;
+}
+
+.story-cta {
+  margin-top: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-decoration: none;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(212,168,74,.3);
+  padding-bottom: 4px;
+  transition: all .3s;
+}
+.story-cta:hover { gap: 20px; border-color: var(--gold); }
+
+/* RITUAL SECTION */
+.ritual {
+  background: var(--warm);
+  padding: 140px 80px;
+  text-align: center;
+}
+
+.ritual-title {
+  font-family: 'Lora', serif;
+  font-size: 56px;
+  font-weight: 400;
+  color: var(--earth);
+  margin-bottom: 16px;
+}
+.ritual-title em { font-style: italic; color: var(--amber); }
+
+.ritual-sub {
+  font-size: 15px;
+  color: rgba(28,24,18,.5);
+  margin-bottom: 80px;
+  letter-spacing: 1px;
+}
+
+.ritual-steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  text-align: left;
+  position: relative;
+}
+
+.ritual-steps::before {
+  content: '';
+  position: absolute;
+  top: 32px;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--amber), transparent);
+  opacity: .3;
+}
+
+.ritual-step {
+  padding: 0 24px;
+  position: relative;
+}
+
+.ritual-step-dot {
+  width: 16px; height: 16px;
+  border: 1px solid var(--amber);
+  border-radius: 50%;
+  background: var(--warm);
+  position: relative;
+  z-index: 2;
+  margin-bottom: 24px;
+}
+
+.ritual-step-num {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 36px;
+  color: rgba(28,24,18,.08);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.ritual-step-title {
+  font-family: 'Lora', serif;
+  font-size: 16px;
+  color: var(--earth);
+  margin-bottom: 10px;
+}
+
+.ritual-step-text {
+  font-size: 12px;
+  color: rgba(28,24,18,.45);
+  line-height: 1.9;
+}
+
+/* TESTIMONIALS */
+.testimonials {
+  padding: 120px 80px;
+  background: var(--cream);
+}
+
+.test-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 32px;
+  margin-top: 64px;
+}
+
+.test-card {
+  padding: 40px 32px;
+  border: 1px solid rgba(28,24,18,.08);
+  position: relative;
+  transition: border-color .4s, box-shadow .4s;
+}
+.test-card:hover {
+  border-color: rgba(200,136,58,.3);
+  box-shadow: 0 8px 40px rgba(200,136,58,.06);
+}
+
+.test-quote {
+  font-family: 'Lora', serif;
+  font-size: 32px;
+  color: var(--amber);
+  opacity: .3;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.test-text {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.9;
+  color: rgba(28,24,18,.65);
+  margin-bottom: 28px;
+}
+
+.test-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.test-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--warm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.test-name {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--earth);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.test-meta {
+  font-size: 11px;
+  color: rgba(28,24,18,.35);
+}
+
+/* NEWSLETTER */
+.newsletter {
+  background: var(--sage);
+  padding: 100px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.nl-title {
+  font-family: 'Lora', serif;
+  font-size: 40px;
+  font-weight: 400;
+  color: var(--cream);
+  line-height: 1.2;
+}
+.nl-title em { font-style: italic; color: var(--gold); }
+
+.nl-text { font-size: 14px; color: rgba(245,240,230,.55); line-height: 2; margin-top: 16px; }
+
+.nl-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nl-input {
+  background: rgba(245,240,230,.1);
+  border: 1px solid rgba(245,240,230,.2);
+  padding: 16px 24px;
+  color: var(--cream);
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  transition: border-color .3s;
+}
+.nl-input::placeholder { color: rgba(245,240,230,.35); }
+.nl-input:focus { border-color: var(--gold); }
+
+.nl-submit {
+  padding: 16px;
+  background: var(--gold);
+  color: var(--earth);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background .3s;
+}
+.nl-submit:hover { background: var(--amber); }
+
+/* FOOTER */
+footer {
+  background: var(--earth);
+  color: rgba(245,240,230,.5);
+  padding: 80px;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 60px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgba(245,240,230,.08);
+}
+
+.footer-brand {
+  font-family: 'Lora', serif;
+  font-size: 28px;
+  color: var(--cream);
+  margin-bottom: 16px;
+  letter-spacing: 4px;
+}
+
+.footer-desc {
+  font-size: 13px;
+  line-height: 2;
+  color: rgba(245,240,230,.4);
+  max-width: 240px;
+}
+
+.footer-col-title {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: rgba(245,240,230,.35);
+  text-decoration: none;
+  transition: color .3s;
+}
+.footer-links a:hover { color: var(--cream); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: rgba(245,240,230,.2);
+  text-transform: uppercase;
+}
+
+/* SCROLL REVEAL */
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity .9s ease, transform .9s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left { opacity: 0; transform: translateX(-32px); transition: opacity .9s ease, transform .9s ease; }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right { opacity: 0; transform: translateX(32px); transition: opacity .9s ease, transform .9s ease; }
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+.delay-1 { transition-delay: .1s; }
+.delay-2 { transition-delay: .2s; }
+.delay-3 { transition-delay: .3s; }
+.delay-4 { transition-delay: .4s; }
+</style>
+</head>
+<body>
+
+<nav id="mainNav">
+  <a href="#" class="nav-logo">YUNJI</a>
+  <ul class="nav-links">
+    <li><a href="#">茶品</a></li>
+    <li><a href="#">产地</a></li>
+    <li><a href="#">品茶</a></li>
+    <li><a href="#">故事</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#" class="nav-cart">购物袋 <span class="cart-badge">2</span></a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-visual">
+    <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+      <!-- Sky gradient -->
+      <defs>
+        <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#1c3a2a"/>
+          <stop offset="60%" style="stop-color:#2d4a20"/>
+          <stop offset="100%" style="stop-color:#1c1812"/>
+        </linearGradient>
+        <linearGradient id="hill1" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#3d5c3a"/>
+          <stop offset="100%" style="stop-color:#2d4228"/>
+        </linearGradient>
+        <linearGradient id="hill2" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#4a6e48"/>
+          <stop offset="100%" style="stop-color:#3a5838"/>
+        </linearGradient>
+        <radialGradient id="sun" cx="70%" cy="25%">
+          <stop offset="0%" style="stop-color:#d4a84a;stop-opacity:.5"/>
+          <stop offset="100%" style="stop-color:transparent;stop-opacity:0"/>
+        </radialGradient>
+      </defs>
+      <rect width="1440" height="900" fill="url(#sky)"/>
+      <!-- Sun glow -->
+      <ellipse cx="1008" cy="225" rx="300" ry="200" fill="url(#sun)"/>
+      <!-- Mountains far -->
+      <path d="M0 600 Q200 400 400 500 Q600 380 800 460 Q1000 360 1200 440 Q1350 390 1440 430 L1440 900 L0 900 Z" fill="#2a4428" opacity=".6"/>
+      <!-- Mountains mid -->
+      <path d="M0 680 Q180 520 360 600 Q500 490 680 570 Q840 480 1020 540 Q1180 470 1440 510 L1440 900 L0 900 Z" fill="url(#hill1)"/>
+      <!-- Tea rows far -->
+      <path d="M0 730 Q360 680 720 700 Q1080 680 1440 700 L1440 900 L0 900 Z" fill="#3d5c38" opacity=".8"/>
+      <!-- Tea rows near - curves -->
+      <path d="M-100 780 Q200 750 500 760 Q800 745 1100 758 Q1300 748 1540 755 L1540 900 L-100 900 Z" fill="#4a6e3a"/>
+      <!-- Tea row lines -->
+      <g stroke="#3a5830" stroke-width="2" fill="none" opacity=".6">
+        <path d="M0 800 Q360 790 720 795 Q1080 790 1440 795"/>
+        <path d="M0 820 Q360 810 720 815 Q1080 810 1440 815"/>
+        <path d="M0 840 Q360 830 720 835 Q1080 830 1440 835"/>
+        <path d="M0 860 Q360 850 720 855 Q1080 850 1440 855"/>
+      </g>
+      <!-- Mist -->
+      <ellipse cx="400" cy="700" rx="400" ry="60" fill="rgba(245,240,230,.04)"/>
+      <ellipse cx="900" cy="680" rx="350" ry="50" fill="rgba(245,240,230,.03)"/>
+      <!-- Stars -->
+      <circle cx="200" cy="100" r="1" fill="rgba(245,240,230,.4)"/>
+      <circle cx="500" cy="150" r="1.5" fill="rgba(245,240,230,.3)"/>
+      <circle cx="800" cy="80" r="1" fill="rgba(245,240,230,.5)"/>
+      <circle cx="1100" cy="120" r="1" fill="rgba(245,240,230,.3)"/>
+      <circle cx="350" cy="200" r="1" fill="rgba(245,240,230,.2)"/>
+    </svg>
+  </div>
+
+  <div class="mist-layer"></div>
+  <div class="mist-layer"></div>
+  <div class="mist-layer"></div>
+  <div class="hero-gradient"></div>
+
+  <!-- Floating tea product -->
+  <div class="hero-product">
+    <svg width="200" height="260" viewBox="0 0 200 260">
+      <defs>
+        <linearGradient id="teaCake" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#5a4228"/>
+          <stop offset="50%" style="stop-color:#8b6238"/>
+          <stop offset="100%" style="stop-color:#4a3018"/>
+        </linearGradient>
+        <radialGradient id="teaShine" cx="35%" cy="35%">
+          <stop offset="0%" style="stop-color:rgba(245,220,180,.3)"/>
+          <stop offset="100%" style="stop-color:transparent"/>
+        </radialGradient>
+      </defs>
+      <!-- Cake shadow -->
+      <ellipse cx="100" cy="248" rx="70" ry="8" fill="rgba(28,24,18,.3)" filter="blur(4px)"/>
+      <!-- Cake body -->
+      <ellipse cx="100" cy="170" rx="88" ry="28" fill="#3a2810"/>
+      <ellipse cx="100" cy="160" rx="88" ry="76" fill="url(#teaCake)"/>
+      <ellipse cx="100" cy="152" rx="88" ry="76" fill="url(#teaShine)"/>
+      <!-- Surface texture -->
+      <ellipse cx="100" cy="148" rx="68" ry="58" fill="none" stroke="rgba(245,220,180,.08)" stroke-width="1"/>
+      <ellipse cx="100" cy="148" rx="44" ry="38" fill="none" stroke="rgba(245,220,180,.06)" stroke-width="1"/>
+      <!-- Label -->
+      <ellipse cx="100" cy="142" rx="38" ry="30" fill="rgba(245,240,230,.06)" stroke="rgba(245,220,180,.15)" stroke-width="1"/>
+      <text x="100" y="138" text-anchor="middle" fill="rgba(245,220,180,.6)" font-size="10" font-family="serif">云</text>
+      <text x="100" y="152" text-anchor="middle" fill="rgba(245,220,180,.5)" font-size="9" font-family="serif">际</text>
+      <!-- Center hole -->
+      <ellipse cx="100" cy="142" rx="6" ry="5" fill="#3a2810" stroke="rgba(245,220,180,.2)" stroke-width="1"/>
+      <!-- String -->
+      <line x1="100" y1="137" x2="100" y2="90" stroke="rgba(200,168,80,.5)" stroke-width="1"/>
+      <!-- Wrapper paper -->
+      <path d="M12 160 L100 240 L188 160" fill="rgba(245,240,230,.06)" stroke="rgba(245,240,230,.1)" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">云南 · 布朗山 · 古树普洱</div>
+    <h1 class="hero-title">
+      <span class="block">在云端之上</span>
+      <em class="block">生长的滋味</em>
+    </h1>
+    <p class="hero-tagline">每一片叶，都是时间与山野的馈赠。云际茶，以古树为源，以匠心为器。</p>
+    <div class="hero-cta-row">
+      <a href="#" class="btn-leaf"><span>探索茶品</span><span>→</span></a>
+      <a href="#" class="btn-outline-cream">了解产地</a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-line-v"></div>
+    <span>向下</span>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="featured">
+  <div class="featured-header reveal">
+    <div>
+      <div class="section-label">精选茶品</div>
+      <h2 class="section-title">当季<em>推荐</em></h2>
+    </div>
+    <a href="#" class="view-all">查看全部茶品 →</a>
+  </div>
+
+  <div class="products-grid">
+    <!-- Product 1 - Large -->
+    <div class="product-card reveal">
+      <div class="product-img" style="height:460px;">
+        <div class="product-img-placeholder" style="height:460px; background:linear-gradient(160deg,#2d4228,#5a7838);">
+          <svg width="160" height="200" viewBox="0 0 160 200">
+            <defs>
+              <radialGradient id="p1" cx="35%" cy="30%">
+                <stop offset="0%" style="stop-color:#e8d0a0;stop-opacity:.9"/>
+                <stop offset="100%" style="stop-color:#6b4820;stop-opacity:.5"/>
+              </radialGradient>
+            </defs>
+            <ellipse cx="80" cy="190" rx="55" ry="6" fill="rgba(28,24,18,.3)"/>
+            <ellipse cx="80" cy="140" rx="68" ry="22" fill="#3a2810"/>
+            <ellipse cx="80" cy="128" rx="68" ry="58" fill="url(#p1)"/>
+            <ellipse cx="80" cy="118" rx="50" ry="42" fill="none" stroke="rgba(245,220,180,.08)" stroke-width="1"/>
+            <ellipse cx="80" cy="118" rx="24" ry="17" fill="rgba(245,230,200,.06)" stroke="rgba(245,220,180,.12)" stroke-width="1"/>
+            <ellipse cx="80" cy="118" rx="5" ry="4" fill="#3a2810"/>
+            <line x1="80" y1="114" x2="80" y2="65" stroke="rgba(200,160,60,.5)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="product-badge">热销</div>
+      </div>
+      <div class="product-cat">布朗山 · 古树</div>
+      <div class="product-name">布朗古树生茶饼 2024</div>
+      <div class="product-desc">300年以上古树，春茶头采，石磨压制，茶气足，回甘持久，适合收藏。</div>
+      <div class="product-footer">
+        <div class="product-price">¥168 / 饼</div>
+        <a href="#" class="product-btn">加入购物袋 +</a>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-card reveal delay-1">
+      <div class="product-img" style="height:210px;">
+        <div class="product-img-placeholder" style="height:210px; background:linear-gradient(160deg,#1a2e3a,#2a4a5a);">
+          <svg width="100" height="130" viewBox="0 0 100 130">
+            <defs>
+              <linearGradient id="p2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#a0c8d0;stop-opacity:.8"/>
+                <stop offset="100%" style="stop-color:#405868;stop-opacity:.6"/>
+              </linearGradient>
+            </defs>
+            <rect x="20" y="20" width="60" height="90" rx="4" fill="url(#p2)" opacity=".7"/>
+            <rect x="25" y="35" width="50" height="60" rx="2" fill="rgba(245,240,230,.05)" stroke="rgba(245,240,230,.08)" stroke-width="1"/>
+            <text x="50" y="68" text-anchor="middle" fill="rgba(245,240,230,.5)" font-size="14" font-family="serif">白</text>
+            <text x="50" y="85" text-anchor="middle" fill="rgba(245,240,230,.35)" font-size="10" font-family="serif">毫</text>
+          </svg>
+        </div>
+      </div>
+      <div class="product-cat">福鼎 · 白茶</div>
+      <div class="product-name">老白茶砖 5年陈</div>
+      <div class="product-desc">福鼎白毫银针，陈放5年，汤色橙黄，枣香浓郁。</div>
+      <div class="product-footer">
+        <div class="product-price">¥288 / 块</div>
+        <a href="#" class="product-btn">加入 +</a>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product-card reveal delay-2">
+      <div class="product-img" style="height:210px;">
+        <div class="product-img-placeholder" style="height:210px; background:linear-gradient(160deg,#1a1000,#3a2800);">
+          <svg width="100" height="130" viewBox="0 0 100 130">
+            <defs>
+              <radialGradient id="p3" cx="40%" cy="35%">
+                <stop offset="0%" style="stop-color:#d4903a;stop-opacity:.8"/>
+                <stop offset="100%" style="stop-color:#6b4010;stop-opacity:.6"/>
+              </radialGradient>
+            </defs>
+            <path d="M50 15 C80 15 90 40 85 65 C80 90 65 110 50 115 C35 110 20 90 15 65 C10 40 20 15 50 15 Z" fill="url(#p3)"/>
+            <path d="M50 30 C70 30 78 48 74 65 C70 82 60 98 50 102 C40 98 30 82 26 65 C22 48 30 30 50 30 Z" fill="none" stroke="rgba(245,220,180,.15)" stroke-width="1"/>
+            <text x="50" y="72" text-anchor="middle" fill="rgba(245,240,230,.6)" font-size="14" font-family="serif">岩</text>
+          </svg>
+        </div>
+      </div>
+      <div class="product-cat">武夷山 · 岩茶</div>
+      <div class="product-name">大红袍 · 传统炭焙</div>
+      <div class="product-desc">正岩山场，传统炭焙工艺，岩骨花香，喉韵悠长。</div>
+      <div class="product-footer">
+        <div class="product-price">¥388 / 盒</div>
+        <a href="#" class="product-btn">加入 +</a>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="product-card reveal delay-1">
+      <div class="product-img" style="height:210px;">
+        <div class="product-img-placeholder" style="height:210px;background:linear-gradient(160deg,#1a2a1a,#304830);">
+          <svg width="100" height="130" viewBox="0 0 100 130">
+            <ellipse cx="50" cy="65" rx="35" ry="50" fill="rgba(90,140,80,.5)" stroke="rgba(90,180,80,.2)" stroke-width="1"/>
+            <ellipse cx="50" cy="55" rx="25" ry="35" fill="rgba(90,160,80,.3)"/>
+            <text x="50" y="70" text-anchor="middle" fill="rgba(200,255,160,.5)" font-size="14" font-family="serif">龙</text>
+            <text x="50" y="87" text-anchor="middle" fill="rgba(200,255,160,.35)" font-size="10" font-family="serif">井</text>
+          </svg>
+        </div>
+      </div>
+      <div class="product-cat">西湖 · 绿茶</div>
+      <div class="product-name">明前龙井 特级</div>
+      <div class="product-desc">清明前采摘，扁形秀丽，香气清新，滋味甘醇。</div>
+      <div class="product-footer">
+        <div class="product-price">¥220 / 罐</div>
+        <a href="#" class="product-btn">加入 +</a>
+      </div>
+    </div>
+
+    <div class="product-card reveal delay-2">
+      <div class="product-img" style="height:210px;">
+        <div class="product-img-placeholder" style="height:210px;background:linear-gradient(160deg,#200a00,#401800);">
+          <svg width="100" height="130" viewBox="0 0 100 130">
+            <rect x="15" y="25" width="70" height="80" rx="6" fill="rgba(160,50,30,.4)" stroke="rgba(200,80,40,.2)" stroke-width="1"/>
+            <rect x="25" y="40" width="50" height="50" rx="3" fill="rgba(200,80,40,.1)" stroke="rgba(200,80,40,.1)" stroke-width="1"/>
+            <text x="50" y="70" text-anchor="middle" fill="rgba(255,200,160,.5)" font-size="14" font-family="serif">滇</text>
+            <text x="50" y="87" text-anchor="middle" fill="rgba(255,200,160,.35)" font-size="10" font-family="serif">红</text>
+          </svg>
+        </div>
+      </div>
+      <div class="product-cat">云南 · 红茶</div>
+      <div class="product-name">滇红 金芽 · 蜜香</div>
+      <div class="product-desc">云南大叶种，金芽密布，蜜香馥郁，汤色红亮透金。</div>
+      <div class="product-footer">
+        <div class="product-price">¥178 / 盒</div>
+        <a href="#" class="product-btn">加入 +</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story">
+  <div class="story-visual reveal-left">
+    <div class="story-img-main">
+      <svg width="300" height="400" viewBox="0 0 300 400">
+        <!-- Mountain landscape at dusk -->
+        <defs>
+          <linearGradient id="sm1" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#1a3a1a"/>
+            <stop offset="100%" style="stop-color:#0a1a08"/>
+          </linearGradient>
+        </defs>
+        <rect width="300" height="400" fill="url(#sm1)"/>
+        <!-- Hills -->
+        <path d="M0 300 Q75 200 150 250 Q225 200 300 260 L300 400 L0 400 Z" fill="#2d4a28" opacity=".8"/>
+        <path d="M0 340 Q100 280 200 310 Q260 290 300 300 L300 400 L0 400 Z" fill="#3a5c30"/>
+        <!-- Tea rows -->
+        <g stroke="#4a7040" stroke-width="1.5" fill="none" opacity=".6">
+          <path d="M0 360 Q150 350 300 358"/>
+          <path d="M0 375 Q150 365 300 373"/>
+          <path d="M0 390 Q150 380 300 388"/>
+        </g>
+        <!-- Moon -->
+        <circle cx="220" cy="70" r="30" fill="rgba(212,200,160,.15)" stroke="rgba(212,200,160,.1)" stroke-width="1"/>
+        <circle cx="232" cy="62" r="24" fill="#1a3a1a"/>
+        <!-- Stars -->
+        <circle cx="80" cy="50" r="1.5" fill="rgba(245,240,230,.5)"/>
+        <circle cx="180" cy="80" r="1" fill="rgba(245,240,230,.4)"/>
+        <circle cx="40" cy="100" r="1" fill="rgba(245,240,230,.3)"/>
+        <!-- Mist -->
+        <ellipse cx="150" cy="290" rx="180" ry="30" fill="rgba(245,240,230,.04)"/>
+      </svg>
+      <div class="story-img-float">
+        <div class="story-img-float-text">300<br>年</div>
+      </div>
+    </div>
+  </div>
+  <div class="story-right reveal-right">
+    <div class="story-label">我们的故事</div>
+    <h2 class="story-title">
+      一杯茶背后<br>是<em>三百年</em>的<br>等待
+    </h2>
+    <p class="story-text">
+      布朗山深处，有一片被遗忘的古茶园。这里的茶树在岁月中慢慢生长，把山野的精华、雨露的滋养，
+      悉数凝聚在每一片叶脉之中。
+    </p>
+    <p class="story-text">
+      我们与世代居于此地的布朗族茶农合作，以最传统的手法采摘与制作，
+      只为让每一位喝茶的人，都能感受到那片土地最真实的温度。
+    </p>
+    <a href="#" class="story-cta">了解完整故事 →</a>
+  </div>
+</section>
+
+<!-- RITUAL -->
+<section class="ritual">
+  <div class="section-label reveal">冲泡之道</div>
+  <h2 class="ritual-title reveal delay-1">品茶<em>仪式</em></h2>
+  <p class="ritual-sub reveal delay-2">五个步骤，开启一次与茶的深度对话</p>
+
+  <div class="ritual-steps">
+    <div class="ritual-step reveal delay-1">
+      <div class="ritual-step-dot"></div>
+      <div class="ritual-step-num">01</div>
+      <div class="ritual-step-title">备器温杯</div>
+      <p class="ritual-step-text">以沸水润洗茶具，让器皿充分预热，为好茶做好准备。</p>
+    </div>
+    <div class="ritual-step reveal delay-2">
+      <div class="ritual-step-dot"></div>
+      <div class="ritual-step-num">02</div>
+      <div class="ritual-step-title">拨茶投杯</div>
+      <p class="ritual-step-text">用茶针轻撬茶饼，取5~7克，置入盖碗或紫砂壶。</p>
+    </div>
+    <div class="ritual-step reveal delay-3">
+      <div class="ritual-step-dot"></div>
+      <div class="ritual-step-num">03</div>
+      <div class="ritual-step-title">润茶醒茶</div>
+      <p class="ritual-step-text">注入100℃沸水，5秒迅速出汤，唤醒沉睡的茶叶。</p>
+    </div>
+    <div class="ritual-step reveal delay-3">
+      <div class="ritual-step-dot"></div>
+      <div class="ritual-step-num">04</div>
+      <div class="ritual-step-title">正式冲泡</div>
+      <p class="ritual-step-text">前五泡控制在10~15秒出汤，感受茶气的层层绽放。</p>
+    </div>
+    <div class="ritual-step reveal delay-4">
+      <div class="ritual-step-dot"></div>
+      <div class="ritual-step-num">05</div>
+      <div class="ritual-step-title">静心品饮</div>
+      <p class="ritual-step-text">小口慢啜，感受苦甜转化，让回甘在喉间慢慢涌现。</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-label reveal">茶客心声</div>
+  <h2 class="section-title reveal delay-1">他们这样<em>评价</em></h2>
+  <div class="test-grid">
+    <div class="test-card reveal">
+      <div class="test-quote">"</div>
+      <p class="test-text">喝了很多普洱，云际的布朗古树让我印象最深。那种山野气息是真实的，不是人工堆出来的味道。</p>
+      <div class="test-author">
+        <div class="test-avatar">🍵</div>
+        <div>
+          <div class="test-name">王先生</div>
+          <div class="test-meta">茶道爱好者 · 北京</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal delay-1">
+      <div class="test-quote">"</div>
+      <p class="test-text">作为礼品送给客户，包装精致，茶的品质更好，客户直接问在哪里买的。</p>
+      <div class="test-author">
+        <div class="test-avatar">🎁</div>
+        <div>
+          <div class="test-name">李女士</div>
+          <div class="test-meta">企业主 · 上海</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal delay-2">
+      <div class="test-quote">"</div>
+      <p class="test-text">已经连续购买三年了，每年的新茶都期待。回甘很好，存了几饼准备放10年。</p>
+      <div class="test-author">
+        <div class="test-avatar">⭐</div>
+        <div>
+          <div class="test-name">张先生</div>
+          <div class="test-meta">普洱收藏者 · 广州</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="reveal-left">
+    <div class="nl-title">订阅新茶<em>资讯</em></div>
+    <p class="nl-text">每逢新茶上市、节气变换，我们会给你送上一封关于茶的信。不频繁，但每一封都值得珍藏。</p>
+  </div>
+  <div class="nl-form reveal-right">
+    <input type="text" class="nl-input" placeholder="您的姓名">
+    <input type="email" class="nl-input" placeholder="您的邮箱地址">
+    <button class="nl-submit">订阅茶讯</button>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">YUNJI</div>
+      <p class="footer-desc">云际茶，来自云南布朗山的古树茶品牌。以诚实的茶，换取真实的信任。</p>
+    </div>
+    <div>
+      <div class="footer-col-title">茶品</div>
+      <ul class="footer-links">
+        <li><a href="#">普洱生茶</a></li>
+        <li><a href="#">普洱熟茶</a></li>
+        <li><a href="#">白茶</a></li>
+        <li><a href="#">岩茶</a></li>
+        <li><a href="#">红茶</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">了解</div>
+      <ul class="footer-links">
+        <li><a href="#">我们的故事</a></li>
+        <li><a href="#">茶园产地</a></li>
+        <li><a href="#">制茶工艺</a></li>
+        <li><a href="#">品茶指南</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">联系</div>
+      <ul class="footer-links">
+        <li><a href="#">客服中心</a></li>
+        <li><a href="#">企业定制</a></li>
+        <li><a href="#">代理合作</a></li>
+        <li><a href="#">微信公众号</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 云际茶 YUNJI TEA</span>
+    <span>云南 · 普洱 · 布朗山</span>
+  </div>
+</footer>
+
+<script>
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('mainNav');
+  nav.classList.toggle('scrolled', window.scrollY > 80);
+});
+
+// Scroll reveal
+const allReveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+allReveals.forEach(el => obs.observe(el));
+
+// Parallax hero
+window.addEventListener('scroll', () => {
+  const heroContent = document.querySelector('.hero-content');
+  const heroProduct = document.querySelector('.hero-product');
+  const scrollY = window.scrollY;
+  if (heroContent && scrollY < window.innerHeight) {
+    heroContent.style.transform = `translateY(${scrollY * 0.35}px)`;
+    heroContent.style.opacity = 1 - scrollY / 700;
+  }
+  if (heroProduct && scrollY < window.innerHeight) {
+    heroProduct.style.transform = `translateY(calc(-50% + ${scrollY * 0.2}px))`;
+  }
+});
+</script>
+
+<script>
+// Hero background - replace SVG with real image overlay
+const heroBgVisual = document.querySelector('.hero-bg-visual');
+if (heroBgVisual) {
+  const img = document.createElement('img');
+  img.src = 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=1400&q=85';
+  img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.5) saturate(1.2);z-index:0;';
+  heroBgVisual.style.position = 'relative';
+  heroBgVisual.insertBefore(img, heroBgVisual.firstChild);
+  const svg = heroBgVisual.querySelector('svg');
+  if (svg) svg.style.cssText = 'position:relative;z-index:1;';
+}
+
+// Product card images
+const productImages = [
+  'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=85',
+  'https://images.unsplash.com/photo-1563822249366-3efb23b8ae99?auto=format&fit=crop&w=400&q=85',
+  'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=400&q=85',
+  'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=85',
+  'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=400&q=85',
+];
+
+document.querySelectorAll('.product-img-placeholder').forEach((el, i) => {
+  if (productImages[i]) {
+    const img = document.createElement('img');
+    img.src = productImages[i];
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.25,.46,.45,.94);';
+    img.className = 'product-real-img';
+    // Replace placeholder content with real image
+    const h = el.style.height || '210px';
+    el.style.overflow = 'hidden';
+    el.innerHTML = '';
+    el.appendChild(img);
+
+    // Hover zoom
+    const card = el.closest('.product-card');
+    if (card) {
+      card.addEventListener('mouseenter', () => { img.style.transform = 'scale(1.06)'; });
+      card.addEventListener('mouseleave', () => { img.style.transform = 'scale(1)'; });
+    }
+  }
+});
+
+// Story section main image
+const storyImg = document.querySelector('.story-img-main');
+if (storyImg) {
+  const img = document.createElement('img');
+  img.src = 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=700&q=85';
+  img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.55) saturate(1.1);z-index:0;';
+  storyImg.style.position = 'relative';
+  storyImg.insertBefore(img, storyImg.firstChild);
+  const svg = storyImg.querySelector('svg');
+  if (svg) svg.style.cssText = 'position:relative;z-index:1;';
+  const floatBox = storyImg.querySelector('.story-img-float');
+  if (floatBox) floatBox.style.zIndex = '2';
+}
+
+// Tea field aerial - add to newsletter bg
+const ritual = document.querySelector('.ritual');
+if (ritual) {
+  ritual.style.position = 'relative';
+  ritual.style.overflow = 'hidden';
+  const img = document.createElement('img');
+  img.src = 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=1400&q=80';
+  img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.06) saturate(1.5);z-index:0;';
+  ritual.insertBefore(img, ritual.firstChild);
+  ritual.querySelectorAll('*:not(img)').forEach(el => {
+    if (!el.style.position) el.style.position = 'relative';
+    el.style.zIndex = '1';
+  });
+}
+</script>
+</body>
+</html>
