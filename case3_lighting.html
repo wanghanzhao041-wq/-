@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>北欧极简吊灯 — 详情页</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#ffffff;--bg2:#f9f8f6;--bg3:#f2f0ec;--border:#e8e4dc;--text:#5c5650;--textd:#1e1a14;--textl:#9a9490;--brass:#b8924a;--brassl:#d4b06a;--black:#141210;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-serif;font-weight:300;line-height:1.9;max-width:800px;margin:0 auto;}
+
+/* HERO */
+.hero{position:relative;height:580px;overflow:hidden;}
+.hero img{width:100%;height:100%;object-fit:cover;filter:brightness(.38);}
+.hero-grad{position:absolute;inset:0;background:linear-gradient(to right,rgba(20,18,16,.95) 0%,rgba(20,18,16,.3) 65%,transparent 100%);}
+.hero-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:70px 64px;}
+.series{font-size:10px;letter-spacing:5px;color:var(--brassl);text-transform:uppercase;margin-bottom:18px;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:white;line-height:1.15;margin-bottom:10px;}
+.hero-title em{font-style:italic;color:var(--brassl);}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.38);letter-spacing:2px;margin-bottom:30px;line-height:2;max-width:360px;}
+.hero-price{display:inline-flex;align-items:baseline;gap:10px;}
+.price-m{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:var(--brassl);}
+.price-s{font-size:12px;color:rgba(255,255,255,.3);letter-spacing:1px;}
+
+/* 场景三栏 */
+.scene-strip{display:grid;grid-template-columns:1fr 1fr 1fr;}
+.ss-item{position:relative;height:240px;overflow:hidden;}
+.ss-item img{width:100%;height:100%;object-fit:cover;filter:brightness(.45);transition:filter .4s;}
+.ss-item:hover img{filter:brightness(.7);}
+.ss-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;background:linear-gradient(transparent 40%,rgba(0,0,0,.5));}
+.ss-title{font-size:13px;color:white;letter-spacing:2px;margin-bottom:4px;}
+.ss-desc{font-size:11px;color:rgba(255,255,255,.5);}
+
+/* 产品主图 */
+.product-showcase{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.ps-main{position:relative;overflow:hidden;}
+.ps-main img{width:100%;height:400px;object-fit:cover;}
+.ps-side{display:flex;flex-direction:column;gap:3px;}
+.ps-side img{width:100%;height:132px;object-fit:cover;filter:brightness(.85);}
+
+/* 大图 */
+.full-img{position:relative;height:420px;overflow:hidden;border-bottom:1px solid var(--border);}
+.full-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.55);}
+.full-img-caption{position:absolute;bottom:32px;left:56px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:rgba(255,255,255,.55);}
+
+/* 章节 */
+.chapter{display:flex;align-items:center;gap:16px;padding:44px 54px 0;}
+.ch-line{flex:1;height:1px;background:var(--border);}
+.ch-label{font-size:10px;letter-spacing:4px;color:var(--brass);text-transform:uppercase;white-space:nowrap;}
+.ch-title{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--textd);font-weight:300;padding:10px 54px 0;}
+
+/* 通用 */
+.section{padding:20px 54px 44px;border-bottom:1px solid var(--border);}
+.section p{font-size:14px;color:var(--text);line-height:2.2;margin-bottom:12px;}
+
+/* 功能列表 */
+.tech-list{margin-top:24px;display:flex;flex-direction:column;gap:3px;}
+.tl-item{display:flex;align-items:center;gap:20px;padding:20px 22px;background:var(--bg3);}
+.tl-icon{font-size:22px;flex-shrink:0;width:36px;text-align:center;}
+.tl-body h4{font-size:13px;color:var(--textd);font-weight:400;margin-bottom:4px;letter-spacing:1px;}
+.tl-body p{font-size:12px;color:var(--textl);line-height:1.8;}
+.tl-badge{margin-left:auto;font-size:10px;padding:3px 10px;border:1px solid var(--brass);color:var(--brass);white-space:nowrap;flex-shrink:0;}
+
+/* 规格表 */
+.spec-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:24px;}
+.spec-table tr{border-bottom:1px solid var(--border);}
+.spec-table td{padding:13px 16px;}
+.spec-table td:first-child{color:var(--textl);font-size:11px;letter-spacing:1px;width:36%;background:var(--bg3);}
+.spec-table td:last-child{color:var(--textd);}
+
+/* SKU */
+.sku-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px;}
+.sku-card{border:1px solid var(--border);padding:22px 16px;text-align:center;transition:border-color .3s,box-shadow .3s;}
+.sku-card:hover{border-color:var(--brass);box-shadow:0 4px 20px rgba(184,146,74,.1);}
+.sku-size{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--textd);margin-bottom:4px;}
+.sku-label{font-size:11px;color:var(--textl);margin-bottom:10px;letter-spacing:1px;}
+.sku-price{font-size:20px;color:var(--brass);}
+.sku-note{font-size:10px;color:var(--textl);margin-top:4px;}
+
+/* 安装步骤 */
+.install-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:24px;}
+.is-step{background:var(--bg3);padding:24px 16px;text-align:center;border-top:2px solid var(--border);transition:border-color .3s;}
+.is-step:hover{border-top-color:var(--brass);}
+.is-num{font-family:'Cormorant Garamond',serif;font-size:32px;font-style:italic;color:var(--border);line-height:1;margin-bottom:10px;}
+.is-t{font-size:11px;color:var(--textd);letter-spacing:2px;margin-bottom:6px;}
+.is-d{font-size:10px;color:var(--textl);line-height:1.8;}
+
+/* 保障 */
+.guar-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px;}
+.g-card{padding:22px 18px;border:1px solid var(--border);text-align:center;}
+.g-icon{font-size:22px;margin-bottom:10px;display:block;}
+.g-t{font-size:12px;color:var(--textd);letter-spacing:1px;margin-bottom:4px;}
+.g-d{font-size:11px;color:var(--textl);line-height:1.8;}
+
+/* CTA */
+.cta{position:relative;height:380px;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;}
+.cta img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.18);}
+.cta-inner{position:relative;z-index:2;}
+.cta-t{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:white;margin-bottom:6px;}
+.cta-t em{font-style:italic;color:var(--brassl);}
+.cta-s{font-size:12px;color:rgba(255,255,255,.3);letter-spacing:3px;margin-bottom:32px;}
+.btn{display:inline-block;padding:15px 42px;background:var(--brass);color:white;font-size:13px;letter-spacing:3px;text-decoration:none;margin:0 6px;font-family:'Noto Sans SC',sans-serif;}
+.btn2{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.55);}
+
+/* FOOTER */
+.footer{background:var(--black);padding:20px 54px;display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.2);letter-spacing:2px;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <img src="lamp1.png" alt="北欧极简吊灯室内效果">
+  <div class="hero-grad"></div>
+  <div class="hero-content">
+    <div class="series">NORDIC MINIMAL SERIES · N-08</div>
+    <h1 class="hero-title">北欧极简<br><em>云朵吊灯</em></h1>
+    <div class="hero-sub">奶白哑光肌理 · 柔光弥散设计<br>餐厅 · 客厅 · 书房 全场景适用</div>
+    <div class="hero-price">
+      <span class="price-m">¥328</span>
+      <span class="price-s">单头款 · 含灯泡 · 顺丰包邮</span>
+    </div>
+  </div>
+</div>
+
+<!-- 场景三图 -->
+<div class="scene-strip">
+  <div class="ss-item">
+    <img src="lamp1.png" alt="客厅场景">
+    <div class="ss-overlay"><div class="ss-title">客厅主灯</div><div class="ss-desc">柔光弥散，温暖全室</div></div>
+  </div>
+  <div class="ss-item">
+    <img src="lamp2.png" alt="餐厅场景">
+    <div class="ss-overlay"><div class="ss-title">餐厅首选</div><div class="ss-desc">聚焦餐桌，氛围满满</div></div>
+  </div>
+  <div class="ss-item">
+    <img src="lamp3.png" alt="书房场景">
+    <div class="ss-overlay"><div class="ss-title">书房书桌</div><div class="ss-desc">柔和无眩，专注工作</div></div>
+  </div>
+</div>
+
+<!-- 产品主图 -->
+<div class="product-showcase">
+  <div class="ps-main"><img src="lamp2.png" alt="产品正面"></div>
+  <div class="ps-side">
+    <img src="lamp1.png" alt="产品场景1">
+    <img src="lamp3.png" alt="产品场景2">
+    <img src="lamp2.png" alt="产品细节">
+  </div>
+</div>
+
+<!-- 大图 -->
+<div class="full-img">
+  <img src="lamp1.png" alt="吊灯氛围图">
+  <div class="full-img-caption">奶白肌理 · 每一处细节都是生活的品味</div>
+</div>
+
+<!-- 功能 -->
+<div class="chapter"><div class="ch-line"></div><div class="ch-label">功能特性</div><div class="ch-line"></div></div>
+<div class="ch-title">不只是好看</div>
+<div class="section">
+  <div class="tech-list">
+    <div class="tl-item"><span class="tl-icon">💡</span><div class="tl-body"><h4>柔光弥散设计</h4><p>云朵造型灯罩将光线均匀漫射，无刺眼光斑，整个空间都是柔和暖光。</p></div><span class="tl-badge">护眼设计</span></div>
+    <div class="tl-item"><span class="tl-icon">🎨</span><div class="tl-body"><h4>奶白哑光肌理</h4><p>灯罩采用特殊肌理处理，触感细腻，既是灯具也是艺术装置，关灯也好看。</p></div><span class="tl-badge">颜值在线</span></div>
+    <div class="tl-item"><span class="tl-icon">🌡</span><div class="tl-body"><h4>3000K暖白光</h4><p>精选LED光源，显色指数Ra≥90，还原真实色彩，营造温馨自然的家居氛围。</p></div><span class="tl-badge">含灯泡</span></div>
+    <div class="tl-item"><span class="tl-icon">📏</span><div class="tl-body"><h4>吊线自由调节</h4><p>吊线最长150cm，可按层高剪短固定，适配2.4m~4m各种层高空间。</p></div><span class="tl-badge">灵活适配</span></div>
+  </div>
+</div>
+
+<!-- 规格 -->
+<div class="chapter"><div class="ch-line"></div><div class="ch-label">产品规格</div><div class="ch-line"></div></div>
+<div class="ch-title">详细参数</div>
+<div class="section">
+  <table class="spec-table">
+    <tr><td>产品系列</td><td>北欧极简云朵吊灯 N-08</td></tr>
+    <tr><td>灯罩材质</td><td>树脂 · 哑白肌理处理</td></tr>
+    <tr><td>灯罩尺寸</td><td>直径28cm / 38cm / 48cm（三款可选）</td></tr>
+    <tr><td>整体高度</td><td>最长150cm（可调节）</td></tr>
+    <tr><td>灯头型号</td><td>E27（含LED灯泡×1）</td></tr>
+    <tr><td>光源色温</td><td>3000K 暖白光</td></tr>
+    <tr><td>显色指数</td><td>Ra≥90</td></tr>
+    <tr><td>适用电压</td><td>AC 220V / 50Hz</td></tr>
+    <tr><td>适用层高</td><td>2.4m ~ 4m</td></tr>
+    <tr><td>是否调光</td><td>支持（需另配调光开关）</td></tr>
+  </table>
+</div>
+
+<!-- SKU -->
+<div class="chapter"><div class="ch-line"></div><div class="ch-label">规格选择</div><div class="ch-line"></div></div>
+<div class="ch-title">按空间选尺寸</div>
+<div class="section">
+  <div class="sku-grid">
+    <div class="sku-card"><div class="sku-size">Φ28cm</div><div class="sku-label">小号 · 书房/床头</div><div class="sku-price">¥328</div><div class="sku-note">适合6㎡以下</div></div>
+    <div class="sku-card"><div class="sku-size">Φ38cm</div><div class="sku-label">中号 · 餐厅首选</div><div class="sku-price">¥428</div><div class="sku-note">适合8~15㎡</div></div>
+    <div class="sku-card"><div class="sku-size">Φ48cm</div><div class="sku-label">大号 · 客厅主灯</div><div class="sku-price">¥558</div><div class="sku-note">适合15㎡以上</div></div>
+  </div>
+</div>
+
+<!-- 安装 -->
+<div class="chapter"><div class="ch-line"></div><div class="ch-label">安装指南</div><div class="ch-line"></div></div>
+<div class="ch-title">10分钟自行安装</div>
+<div class="section">
+  <div class="install-steps">
+    <div class="is-step"><div class="is-num">1</div><div class="is-t">固定底盘</div><p class="is-d">将底盘固定至天花板，接好电线</p></div>
+    <div class="is-step"><div class="is-num">2</div><div class="is-t">调节长度</div><p class="is-d">根据层高剪短吊线</p></div>
+    <div class="is-step"><div class="is-num">3</div><div class="is-t">挂上灯具</div><p class="is-d">挂钩挂入底盘扣紧</p></div>
+    <div class="is-step"><div class="is-num">4</div><div class="is-t">安装灯泡</div><p class="is-d">旋入灯泡通电测试</p></div>
+  </div>
+</div>
+
+<!-- 保障 -->
+<div class="chapter"><div class="ch-line"></div><div class="ch-label">购买保障</div><div class="ch-line"></div></div>
+<div class="ch-title">放心购买</div>
+<div class="section">
+  <div class="guar-row">
+    <div class="g-card"><span class="g-icon">🛡</span><div class="g-t">2年质保</div><p class="g-d">灯具本体2年质保，非人为损坏包换</p></div>
+    <div class="g-card"><span class="g-icon">↩</span><div class="g-t">15天退换</div><p class="g-d">收货15天内支持无理由退换</p></div>
+    <div class="g-card"><span class="g-icon">🔧</span><div class="g-t">安装指导</div><p class="g-d">图文+视频教程，随时在线答疑</p></div>
+  </div>
+</div>
+
+<div class="cta">
+  <img src="lamp1.png" alt="">
+  <div class="cta-inner">
+    <div class="cta-t">让光，<em>重新定义你的空间</em></div>
+    <div class="cta-s">顺丰包邮 · 48小时发货</div>
+    <a class="btn" href="#">立即购买</a>
+    <a class="btn btn2" href="#">咨询搭配方案</a>
+  </div>
+</div>
+
+<div class="footer">
+  <span>极简灯具 · 工厂直供</span>
+  <span>品质照明 © 2025</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>云南古树普洱茶 — 详情页</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--green:#1a2e1a;--green2:#243624;--moss:#4a6e3a;--gold:#c8a850;--goldl:#e8c878;--cream:#faf6ee;--cream2:#f2ead8;--cream3:#e8dcc4;--text:#5a4e3a;--textd:#2a1e0a;}
+body{background:var(--cream);color:var(--text);font-family:'Noto Serif SC',serif;font-weight:300;line-height:1.9;max-width:800px;margin:0 auto;}
+
+/* HERO */
+.hero{position:relative;height:540px;overflow:hidden;}
+.hero img{width:100%;height:100%;object-fit:cover;filter:brightness(.42) saturate(1.1);}
+.hero-grad{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 25%,rgba(26,46,26,.9) 100%);}
+.hero-content{position:absolute;bottom:0;left:0;right:0;padding:60px;}
+.origin-tag{font-size:10px;letter-spacing:4px;color:var(--goldl);text-transform:uppercase;margin-bottom:14px;opacity:.85;}
+.hero-title{font-family:'Ma Shan Zheng',cursive;font-size:56px;color:white;line-height:1.15;margin-bottom:10px;}
+.hero-en{font-size:11px;color:rgba(255,255,255,.35);letter-spacing:4px;margin-bottom:22px;}
+.hero-price{display:inline-flex;align-items:baseline;gap:10px;background:rgba(200,168,80,.12);border:1px solid rgba(200,168,80,.28);padding:11px 22px;}
+.price-m{font-size:28px;color:var(--goldl);}
+.price-s{font-size:11px;color:rgba(255,255,255,.35);}
+
+/* 信息条 */
+.info-bar{background:var(--green);padding:14px 50px;display:flex;gap:32px;flex-wrap:wrap;}
+.ib{font-size:11px;color:rgba(255,255,255,.55);letter-spacing:2px;}
+.ib em{color:var(--goldl);font-style:normal;}
+
+/* 章节标 */
+.chapter{display:flex;align-items:center;gap:14px;padding:44px 50px 0;}
+.ch-icon{font-size:18px;color:var(--gold);}
+.ch-text h3{font-size:15px;color:var(--textd);font-weight:400;letter-spacing:3px;}
+.ch-text p{font-size:10px;color:var(--text);letter-spacing:3px;text-transform:uppercase;opacity:.5;}
+.ch-line{flex:1;height:1px;background:var(--cream3);}
+
+/* 通用 */
+.section{padding:28px 50px 44px;border-bottom:1px solid var(--cream3);}
+.section p{font-size:14px;color:var(--text);line-height:2.2;margin-bottom:12px;}
+
+/* 大图 */
+.full-img{position:relative;height:420px;overflow:hidden;}
+.full-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.5) saturate(1.15);}
+.full-img-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.fiq{font-family:'Ma Shan Zheng',cursive;font-size:30px;color:rgba(255,255,255,.7);text-align:center;text-shadow:0 2px 24px rgba(0,0,0,.6);line-height:1.6;}
+
+/* 两图 */
+.two-img{display:grid;grid-template-columns:1fr 1fr;gap:3px;}
+.two-img img{width:100%;height:300px;object-fit:cover;filter:brightness(.6) saturate(1.1);}
+
+/* 产地带 */
+.origin-band{background:var(--green2);padding:50px;display:grid;grid-template-columns:1fr 1.8fr;gap:40px;align-items:center;}
+.ob-img{height:220px;overflow:hidden;border:2px solid rgba(200,168,80,.2);}
+.ob-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.7) saturate(1.1);}
+.ob-title{font-family:'Ma Shan Zheng',cursive;font-size:28px;color:var(--goldl);margin-bottom:12px;}
+.ob-text{font-size:13px;color:rgba(255,255,255,.5);line-height:2.1;}
+
+/* 特色卡 */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px;}
+.feat-card{background:var(--cream2);padding:26px 20px;border-bottom:2px solid var(--cream3);transition:border-color .3s;}
+.feat-card:hover{border-bottom-color:var(--gold);}
+.fc-icon{font-size:24px;margin-bottom:12px;display:block;}
+.fc-t{font-size:13px;color:var(--textd);font-weight:400;margin-bottom:8px;letter-spacing:1px;}
+.fc-d{font-size:12px;color:var(--text);line-height:1.9;}
+
+/* 口感 */
+.taste-section{padding:32px 50px 44px;background:var(--cream2);border-bottom:1px solid var(--cream3);}
+.taste-bar{margin-top:22px;display:flex;flex-direction:column;gap:14px;}
+.tb-row{display:flex;align-items:center;gap:16px;}
+.tb-label{font-size:12px;color:var(--text);width:50px;flex-shrink:0;}
+.tb-track{flex:1;height:5px;background:var(--cream3);border-radius:3px;overflow:hidden;}
+.tb-fill{height:100%;background:linear-gradient(90deg,var(--moss),var(--gold));border-radius:3px;}
+.tb-val{font-size:11px;color:var(--gold);width:24px;text-align:right;}
+
+/* 规格表 */
+.spec-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:24px;}
+.spec-table tr{border-bottom:1px solid var(--cream3);}
+.spec-table td{padding:13px 16px;}
+.spec-table td:first-child{color:var(--text);font-size:11px;letter-spacing:1px;width:36%;background:var(--cream2);}
+.spec-table td:last-child{color:var(--textd);}
+
+/* 冲泡 */
+.brew-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-top:24px;}
+.brew-step{background:var(--cream2);padding:20px 10px;text-align:center;}
+.bs-icon{font-size:22px;margin-bottom:6px;display:block;}
+.bs-num{font-size:10px;color:var(--gold);letter-spacing:2px;margin-bottom:4px;}
+.bs-t{font-size:11px;color:var(--textd);letter-spacing:1px;}
+.bs-d{font-size:10px;color:var(--text);margin-top:4px;line-height:1.7;}
+
+/* SKU */
+.sku-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px;}
+.sku-card{border:1px solid var(--cream3);padding:22px 16px;text-align:center;transition:border-color .3s;}
+.sku-card:hover{border-color:var(--gold);}
+.sku-weight{font-size:20px;color:var(--textd);font-weight:600;margin-bottom:4px;}
+.sku-label{font-size:11px;color:var(--text);margin-bottom:10px;letter-spacing:1px;}
+.sku-price{font-size:20px;color:var(--gold);}
+.sku-note{font-size:10px;color:var(--text);margin-top:4px;}
+
+/* CTA */
+.cta{position:relative;height:360px;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;}
+.cta img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.22) saturate(1.1);}
+.cta-inner{position:relative;z-index:2;}
+.cta-title{font-family:'Ma Shan Zheng',cursive;font-size:42px;color:var(--goldl);margin-bottom:8px;}
+.cta-sub{font-size:12px;color:rgba(255,255,255,.35);letter-spacing:3px;margin-bottom:28px;}
+.btn{display:inline-block;padding:14px 38px;background:var(--gold);color:var(--green);font-size:13px;letter-spacing:3px;text-decoration:none;margin:0 6px;font-family:'Noto Serif SC',serif;}
+.btn2{background:transparent;border:1px solid rgba(200,168,80,.35);color:var(--goldl);}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <img src="tea1.png" alt="云南茶园日出">
+  <div class="hero-grad"></div>
+  <div class="hero-content">
+    <div class="origin-tag">🌿 云南西双版纳 · 布朗山古茶园 · 原产地直发</div>
+    <div class="hero-title">古树普洱<br>生茶饼</div>
+    <div class="hero-en">YUN NAN ANCIENT TREE PU-ERH · 300YR+</div>
+    <div class="hero-price"><span class="price-m">¥168</span><span class="price-s">/ 饼357g · 买2送茶样 · 满3饼包邮</span></div>
+  </div>
+</div>
+
+<div class="info-bar">
+  <span class="ib"><em>300年+</em> 古树原料</span>
+  <span class="ib"><em>春茶</em>头采</span>
+  <span class="ib"><em>石磨</em>手工压制</span>
+  <span class="ib"><em>无添加</em>自然仓储</span>
+  <span class="ib">好评率 <em>99.2%</em></span>
+</div>
+
+<div class="full-img">
+  <img src="tea2.png" alt="茶园全景">
+  <div class="full-img-text"><div class="fiq">「以古树之灵，造就<br>时间的滋味」</div></div>
+</div>
+
+<div class="origin-band">
+  <div class="ob-img"><img src="tea3.png" alt="普洱茶山"></div>
+  <div>
+    <div class="ob-title">布朗山 · 古茶园</div>
+    <p class="ob-text">布朗山是云南著名的古茶产区，这里的古茶树树龄超过300年，根系深扎于红壤之中，自然吸收山间矿物质，造就独一无二的茶气与山野韵。每年春茶季，布朗族茶农按传统手法采摘一芽两叶，石磨压制成饼，历经时间转化，越陈越香。</p>
+  </div>
+</div>
+
+<div class="chapter"><span class="ch-icon">✦</span><div class="ch-text"><h3>产品特色</h3><p>Why This Tea</p></div><div class="ch-line"></div></div>
+<div class="section">
+  <div class="feat-grid">
+    <div class="feat-card"><span class="fc-icon">🌱</span><div class="fc-t">300年古树</div><p class="fc-d">古树根系发达，微量元素丰富，茶气足，层次感强，非台地茶可比。</p></div>
+    <div class="feat-card"><span class="fc-icon">✋</span><div class="fc-t">全程手工</div><p class="fc-d">手工采摘、杀青、石磨压制，保留茶叶天然活性，适合长期存放。</p></div>
+    <div class="feat-card"><span class="fc-icon">📅</span><div class="fc-t">越陈越香</div><p class="fc-d">生茶经过时间转化，香气与滋味持续升华，是可以喝的"古董"。</p></div>
+  </div>
+</div>
+
+<div class="two-img">
+  <img src="tea1.png" alt="茶园晨光">
+  <img src="tea2.png" alt="茶园梯田">
+</div>
+
+<div class="chapter"><span class="ch-icon">☕</span><div class="ch-text"><h3>口感描述</h3><p>Taste Profile</p></div><div class="ch-line"></div></div>
+<div class="taste-section">
+  <p>新茶苦涩中带清凉回甘，茶气足，喉韵深；存放3年以上则转为醇厚，香气渐显，甜润感增强。</p>
+  <div class="taste-bar">
+    <div class="tb-row"><span class="tb-label">回甘</span><div class="tb-track"><div class="tb-fill" style="width:90%"></div></div><span class="tb-val">强</span></div>
+    <div class="tb-row"><span class="tb-label">苦涩</span><div class="tb-track"><div class="tb-fill" style="width:55%"></div></div><span class="tb-val">中</span></div>
+    <div class="tb-row"><span class="tb-label">茶气</span><div class="tb-track"><div class="tb-fill" style="width:85%"></div></div><span class="tb-val">足</span></div>
+    <div class="tb-row"><span class="tb-label">香气</span><div class="tb-track"><div class="tb-fill" style="width:76%"></div></div><span class="tb-val">高</span></div>
+    <div class="tb-row"><span class="tb-label">耐泡</span><div class="tb-track"><div class="tb-fill" style="width:92%"></div></div><span class="tb-val">强</span></div>
+  </div>
+</div>
+
+<div class="chapter"><span class="ch-icon">📋</span><div class="ch-text"><h3>产品规格</h3><p>Specifications</p></div><div class="ch-line"></div></div>
+<div class="section">
+  <table class="spec-table">
+    <tr><td>品名</td><td>布朗山古树普洱生茶</td></tr>
+    <tr><td>产地</td><td>云南省西双版纳州布朗山</td></tr>
+    <tr><td>树龄</td><td>300年以上古树</td></tr>
+    <tr><td>采摘时间</td><td>春茶（清明前后）</td></tr>
+    <tr><td>规格</td><td>357g / 饼（7饼/提，12提/件）</td></tr>
+    <tr><td>压制工艺</td><td>传统石磨压制</td></tr>
+    <tr><td>存储方式</td><td>通风干燥避光，忌异味</td></tr>
+    <tr><td>保质期</td><td>适宜长期存放，越陈越香</td></tr>
+  </table>
+</div>
+
+<div class="chapter"><span class="ch-icon">🫖</span><div class="ch-text"><h3>冲泡指南</h3><p>Brewing Guide</p></div><div class="ch-line"></div></div>
+<div class="section">
+  <div class="brew-steps">
+    <div class="brew-step"><span class="bs-icon">🫖</span><div class="bs-num">01</div><div class="bs-t">温杯</div><p class="bs-d">沸水温润茶具</p></div>
+    <div class="brew-step"><span class="bs-icon">🍃</span><div class="bs-num">02</div><div class="bs-t">投茶</div><p class="bs-d">5~7g/100ml</p></div>
+    <div class="brew-step"><span class="bs-icon">💧</span><div class="bs-num">03</div><div class="bs-t">醒茶</div><p class="bs-d">润茶5秒出汤</p></div>
+    <div class="brew-step"><span class="bs-icon">⏱</span><div class="bs-num">04</div><div class="bs-t">冲泡</div><p class="bs-d">前5泡10秒出</p></div>
+    <div class="brew-step"><span class="bs-icon">🍵</span><div class="bs-num">05</div><div class="bs-t">品饮</div><p class="bs-d">可冲泡15泡+</p></div>
+  </div>
+</div>
+
+<div class="chapter"><span class="ch-icon">📦</span><div class="ch-text"><h3>规格选择</h3><p>Choose Your Size</p></div><div class="ch-line"></div></div>
+<div class="section">
+  <div class="sku-grid">
+    <div class="sku-card"><div class="sku-weight">100g</div><div class="sku-label">品鉴装</div><div class="sku-price">¥55</div><div class="sku-note">适合初次尝试</div></div>
+    <div class="sku-card"><div class="sku-weight">357g</div><div class="sku-label">标准饼 · 最热销</div><div class="sku-price">¥168</div><div class="sku-note">买2饼送茶样</div></div>
+    <div class="sku-card"><div class="sku-weight">一提7饼</div><div class="sku-label">收藏装</div><div class="sku-price">¥1099</div><div class="sku-note">省15%</div></div>
+  </div>
+</div>
+
+<div class="cta">
+  <img src="tea3.png" alt="">
+  <div class="cta-inner">
+    <div class="cta-title">一片好茶，值得等待</div>
+    <div class="cta-sub">原产地直发 · 买2饼送茶样3款</div>
+    <a class="btn" href="#">立即购买</a>
+    <a class="btn btn2" href="#">联系茶农</a>
+  </div>
+</div>
+
+</body>
+</html>

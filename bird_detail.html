@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>镜面不锈钢小鸟雕塑</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --white: #ffffff; --off: #f8f7f5; --light: #f2f0ec;
+  --border: #e0dbd4; --border2: #c8c2b8;
+  --text: #4a4540; --textl: #8a847c; --textd: #1a1714;
+  --gold: #9a7d4a; --goldl: #c4a46a;
+}
+body { background:#fff; color:var(--text); font-family:'Noto Serif SC',serif; font-weight:300; line-height:1.8; max-width:790px; margin:0 auto; }
+
+.top-banner { background:var(--textd); color:rgba(255,255,255,.5); text-align:center; padding:10px; font-size:11px; letter-spacing:4px; }
+.top-banner span { color:var(--goldl); }
+
+.hero { display:grid; grid-template-columns:1fr 1fr; border-bottom:1px solid var(--border); }
+.hero-img { background:var(--light); overflow:hidden; }
+.hero-img img { width:100%; height:100%; object-fit:cover; display:block; }
+.hero-info { padding:48px 40px; display:flex; flex-direction:column; justify-content:center; }
+.cat-label { font-size:10px; letter-spacing:4px; color:var(--gold); text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:10px; }
+.cat-label::after { content:''; flex:1; height:1px; background:var(--gold); opacity:.3; }
+.hero-title { font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:var(--textd); line-height:1.3; margin-bottom:6px; }
+.hero-en { font-family:'Playfair Display',serif; font-style:italic; font-size:13px; color:var(--textl); margin-bottom:24px; }
+.price-block { background:var(--off); padding:18px 22px; margin-bottom:20px; border-left:3px solid var(--gold); }
+.price-main { font-size:30px; color:var(--textd); font-weight:600; }
+.price-sub { font-size:11px; color:var(--textl); margin-top:4px; }
+.tag-row { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:20px; }
+.tag { padding:4px 10px; font-size:11px; letter-spacing:1px; border:1px solid var(--border2); color:var(--textl); }
+.tag.g { border-color:var(--gold); color:var(--gold); }
+.hero-note { font-size:12px; color:var(--textl); line-height:2.2; border-top:1px solid var(--border); padding-top:18px; }
+
+.thumbs { display:grid; grid-template-columns:repeat(5,1fr); gap:3px; border-bottom:1px solid var(--border); }
+.thumbs img { width:100%; aspect-ratio:1; object-fit:cover; display:block; background:var(--light); }
+
+.chapter { display:flex; align-items:center; gap:0; padding:40px 50px 0; }
+.chapter-num { font-family:'Playfair Display',serif; font-size:56px; font-style:italic; color:var(--border); line-height:1; margin-right:16px; font-weight:400; }
+.chapter-text h3 { font-size:18px; color:var(--textd); font-weight:400; letter-spacing:2px; margin-bottom:2px; }
+.chapter-text p { font-size:11px; color:var(--textl); letter-spacing:3px; text-transform:uppercase; }
+
+.section { padding:28px 50px 36px; border-bottom:1px solid var(--border); }
+.section p { font-size:14px; color:var(--text); line-height:2.2; margin-bottom:12px; }
+
+.quote-block { margin:20px 0 28px; padding:22px 28px; border-left:3px solid var(--gold); background:var(--off); }
+.quote-block p { font-family:'Playfair Display',serif; font-style:italic; font-size:15px !important; color:var(--textd) !important; line-height:1.8 !important; margin:0 !important; }
+
+.full-img { width:100%; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.full-img img { width:100%; display:block; }
+
+.two-img { display:grid; grid-template-columns:1fr 1fr; gap:3px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.two-img img { width:100%; aspect-ratio:4/3; object-fit:cover; display:block; background:var(--light); }
+
+.gold-line { height:1px; background:linear-gradient(90deg,transparent,var(--goldl),transparent); opacity:.5; }
+
+.points-section { padding:28px 50px 36px; border-bottom:1px solid var(--border); }
+.point-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:28px; }
+.point-card { padding:26px 22px; border:1px solid var(--border); }
+.point-card:hover { box-shadow:0 4px 20px rgba(0,0,0,.06); }
+.point-icon { font-size:24px; margin-bottom:12px; display:block; color:var(--gold); }
+.point-title { font-size:13px; color:var(--textd); font-weight:400; letter-spacing:2px; margin-bottom:8px; }
+.point-desc { font-size:12px; color:var(--textl); line-height:1.9; }
+
+.spec-section { padding:28px 50px 36px; background:var(--off); border-bottom:1px solid var(--border); }
+.spec-table { width:100%; border-collapse:collapse; margin-top:22px; font-size:13px; }
+.spec-table tr { border-bottom:1px solid var(--border); }
+.spec-table td { padding:14px 16px; }
+.spec-table td:first-child { width:36%; color:var(--textl); font-size:12px; letter-spacing:1px; background:var(--white); }
+.spec-table td:last-child { color:var(--textd); font-weight:400; }
+
+.process-section { padding:36px 50px; background:var(--textd); border-bottom:1px solid #2a2520; }
+.process-section .chapter-num { color:rgba(255,255,255,.08); }
+.process-section .chapter-text h3 { color:rgba(255,255,255,.9); }
+.process-section .chapter-text p { color:rgba(255,255,255,.4); }
+.process-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:28px; }
+.proc-step { background:rgba(255,255,255,.04); padding:26px 18px; text-align:center; border-top:2px solid rgba(154,125,74,.4); }
+.proc-num { font-family:'Playfair Display',serif; font-size:32px; font-style:italic; color:var(--gold); opacity:.6; line-height:1; margin-bottom:10px; }
+.proc-title { font-size:12px; color:rgba(255,255,255,.8); letter-spacing:2px; margin-bottom:8px; }
+.proc-desc { font-size:11px; color:rgba(255,255,255,.4); line-height:1.8; }
+
+.variant-section { padding:28px 50px 36px; border-bottom:1px solid var(--border); }
+.variant-table { width:100%; border-collapse:collapse; margin-top:22px; font-size:13px; }
+.variant-table th { background:var(--textd); color:rgba(255,255,255,.7); padding:12px 16px; font-weight:300; letter-spacing:2px; text-align:left; font-size:11px; }
+.variant-table td { padding:14px 16px; border-bottom:1px solid var(--border); color:var(--text); }
+.variant-table tr:nth-child(even) td { background:var(--off); }
+.badge { display:inline-block; padding:2px 8px; font-size:10px; background:var(--gold); color:#fff; letter-spacing:1px; }
+
+.guarantee-section { padding:28px 50px 36px; background:var(--off); border-bottom:1px solid var(--border); }
+.g-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:24px; }
+.g-card { background:var(--white); padding:22px 18px; text-align:center; border:1px solid var(--border); }
+.g-icon { font-size:22px; margin-bottom:10px; display:block; }
+.g-title { font-size:12px; color:var(--textd); letter-spacing:2px; margin-bottom:6px; }
+.g-desc { font-size:11px; color:var(--textl); line-height:1.8; }
+
+.cta-section { padding:56px 50px; text-align:center; }
+.cta-title { font-family:'Playfair Display',serif; font-size:28px; color:var(--textd); margin-bottom:6px; }
+.cta-en { font-family:'Playfair Display',serif; font-style:italic; font-size:15px; color:var(--textl); margin-bottom:28px; }
+.cta-buttons { display:flex; gap:12px; justify-content:center; margin-bottom:20px; }
+.btn-primary { padding:15px 38px; background:var(--textd); color:#fff; font-family:'Noto Serif SC',serif; font-size:13px; letter-spacing:3px; border:none; cursor:pointer; text-decoration:none; display:inline-block; }
+.btn-secondary { padding:15px 38px; background:transparent; color:var(--textd); font-family:'Noto Serif SC',serif; font-size:13px; letter-spacing:3px; border:1px solid var(--textd); cursor:pointer; text-decoration:none; display:inline-block; }
+.cta-note { font-size:12px; color:var(--textl); letter-spacing:1px; }
+
+.footer { background:var(--textd); padding:22px 50px; display:flex; justify-content:space-between; align-items:center; font-size:11px; color:rgba(255,255,255,.3); letter-spacing:2px; }
+.footer-logo { color:rgba(255,255,255,.6); font-family:'Playfair Display',serif; font-size:14px; }
+</style>
+</head>
+<body>
+
+<div class="top-banner">曲阳欧度雕塑 · 工厂直供 · 15年制造经验 · <span>支持定制</span></div>
+
+<div class="hero">
+  <div class="hero-img"><img src="IMG_20201203_191141_1.jpg" alt="镜面不锈钢小鸟雕塑"></div>
+  <div class="hero-info">
+    <div class="cat-label">精工摆件</div>
+    <h1 class="hero-title">镜面不锈钢<br>小鸟雕塑</h1>
+    <div class="hero-en">Polished Stainless Steel Bird</div>
+    <div class="price-block">
+      <div class="price-main">¥【价格】</div>
+      <div class="price-sub">含税 · 工厂直发 · 满5件享折扣</div>
+    </div>
+    <div class="tag-row">
+      <span class="tag g">304不锈钢</span>
+      <span class="tag g">镜面抛光</span>
+      <span class="tag">工厂直销</span>
+      <span class="tag">支持定制</span>
+    </div>
+    <div class="hero-note">
+      📦 发货：曲阳县 · 3~5个工作日<br>
+      🛡 保障：运损包赔 · 支持退换<br>
+      📐 定制：尺寸 / 造型 / 数量均可
+    </div>
+  </div>
+</div>
+
+<div class="thumbs">
+  <img src="IMG_20201203_191141_1.jpg" alt="">
+  <img src="IMG_20201203_191259.jpg" alt="">
+  <img src="IMG_20201203_191348.jpg" alt="">
+  <img src="IMG_20201203_191359.jpg" alt="">
+  <img src="IMG_20201203_191112.jpg" alt="">
+</div>
+
+<div class="gold-line"></div>
+<div class="chapter"><div class="chapter-num">01</div><div class="chapter-text"><h3>产品介绍</h3><p>Product Introduction</p></div></div>
+<div class="section">
+  <div class="quote-block"><p>「以钢铁之姿，定格自然之灵——每一道光线落在镜面上，都是一幅流动的画。」</p></div>
+  <p>这是一件兼具艺术气质与装饰功能的手工精制雕塑。以304优质不锈钢为原料，由曲阳匠人锻造成型，经过三道镜面抛光工序处理，整体表面光洁如镜，随光线与环境的变化折射出千变万化的光影。</p>
+  <p>小鸟造型简洁饱满，身形流线圆润，爪足纤细毕现。单件摆放即是焦点，多件组合陈设则呈现出勃勃生机，是家居、商业空间陈设的上乘之选。</p>
+</div>
+
+<div class="full-img"><img src="IMG_20201203_191259.jpg" alt="小鸟雕塑侧面展示"></div>
+
+<div class="gold-line"></div>
+<div class="chapter"><div class="chapter-num">02</div><div class="chapter-text"><h3>工艺亮点</h3><p>Craftsmanship</p></div></div>
+<div class="points-section">
+  <div class="point-grid">
+    <div class="point-card">
+      <span class="point-icon">✦</span>
+      <div class="point-title">三道镜面抛光</div>
+      <p class="point-desc">粗抛去氧化层 → 中抛消划痕 → 精抛达镜面，光洁度达装饰级标准，能清晰反映周围景物。</p>
+    </div>
+    <div class="point-card">
+      <span class="point-icon">⬡</span>
+      <div class="point-title">304不锈钢原料</div>
+      <p class="point-desc">工业级304不锈钢，防锈耐腐蚀，不褪色，室内外均可长期陈设，无需特殊养护。</p>
+    </div>
+    <div class="point-card">
+      <span class="point-icon">◈</span>
+      <div class="point-title">手工锻焊成型</div>
+      <p class="point-desc">爪足、喙部等细节由工匠手工弯折焊接，形态自然生动，细节精准，非机器量产可比。</p>
+    </div>
+    <div class="point-card">
+      <span class="point-icon">⬙</span>
+      <div class="point-title">曲阳产地直发</div>
+      <p class="point-desc">曲阳雕塑产业重镇深耕15年，工厂直供，品质可控，价格无中间差价。</p>
+    </div>
+  </div>
+</div>
+
+<div class="two-img">
+  <img src="IMG_20201203_191348.jpg" alt="">
+  <img src="IMG_20201203_191112.jpg" alt="">
+</div>
+
+<div class="gold-line"></div>
+<div class="chapter"><div class="chapter-num">03</div><div class="chapter-text"><h3>产品规格</h3><p>Specifications</p></div></div>
+<div class="spec-section">
+  <table class="spec-table">
+    <tr><td>材质</td><td>304不锈钢</td></tr>
+    <tr><td>表面工艺</td><td>镜面抛光（三道工序）</td></tr>
+    <tr><td>参考尺寸</td><td>【请填写 长×宽×高 cm】</td></tr>
+    <tr><td>参考重量</td><td>【请填写 kg】</td></tr>
+    <tr><td>适用场景</td><td>室内外均可</td></tr>
+    <tr><td>生产工艺</td><td>手工锻造 · 氩弧焊接 · 镜面抛光</td></tr>
+    <tr><td>起订量</td><td>单件起售 · 10件以上享批发价</td></tr>
+    <tr><td>定制服务</td><td>支持尺寸 / 造型 / 数量定制</td></tr>
+    <tr><td>交货周期</td><td>现货3-5天 · 定制15-25天</td></tr>
+    <tr><td>包装方式</td><td>贴膜防划 + 泡沫填充 + 纸箱装箱</td></tr>
+  </table>
+</div>
+
+<div class="process-section">
+  <div class="chapter" style="padding:0 0 0 0;"><div class="chapter-num">04</div><div class="chapter-text"><h3>生产流程</h3><p>Manufacturing Process</p></div></div>
+  <div class="process-steps">
+    <div class="proc-step"><div class="proc-num">Ⅰ</div><div class="proc-title">钢板裁切</div><p class="proc-desc">依图纸精准下料，冲压成型各部件</p></div>
+    <div class="proc-step"><div class="proc-num">Ⅱ</div><div class="proc-title">手工焊接</div><p class="proc-desc">氩弧焊拼合，整形修边至造型准确</p></div>
+    <div class="proc-step"><div class="proc-num">Ⅲ</div><div class="proc-title">三道抛光</div><p class="proc-desc">粗抛→中抛→精抛，达镜面标准</p></div>
+    <div class="proc-step"><div class="proc-num">Ⅳ</div><div class="proc-title">质检出货</div><p class="proc-desc">逐件检验光洁度与焊接强度后包装</p></div>
+  </div>
+</div>
+
+<div class="full-img"><img src="IMG_20201203_191359.jpg" alt="长尾款展示"></div>
+
+<div class="gold-line"></div>
+<div class="chapter"><div class="chapter-num">05</div><div class="chapter-text"><h3>款式与尺寸</h3><p>Variants</p></div></div>
+<div class="variant-section">
+  <p style="font-size:13px;color:var(--textl);">以下为常规在售款式，支持按需定制，欢迎拍前咨询。</p>
+  <table class="variant-table">
+    <tr><th>款式名称</th><th>参考尺寸</th><th>特点</th><th>状态</th></tr>
+    <tr><td>圆尾款 · 小号</td><td>【填写】</td><td>小巧圆润，案头摆件首选</td><td><span class="badge">有货</span></td></tr>
+    <tr><td>圆尾款 · 中号</td><td>【填写】</td><td>比例协调，最为热销</td><td><span class="badge">有货</span></td></tr>
+    <tr><td>长尾款 · 中号</td><td>【填写】</td><td>修长优雅，极具线条感</td><td><span class="badge">有货</span></td></tr>
+    <tr><td>定制款</td><td>按需</td><td>尺寸 / 姿态 / 数量均可定制</td><td>咨询客服</td></tr>
+  </table>
+</div>
+
+<div class="guarantee-section">
+  <div class="chapter" style="padding:0 0 0 0;"><div class="chapter-num">06</div><div class="chapter-text"><h3>售后保障</h3><p>After-Sales</p></div></div>
+  <div class="g-grid">
+    <div class="g-card"><span class="g-icon">🛡</span><div class="g-title">运损包赔</div><p class="g-desc">收货后发现运输损坏，凭图联系，全额补发或退款</p></div>
+    <div class="g-card"><span class="g-icon">↩</span><div class="g-title">7天退换</div><p class="g-desc">非定制品支持7天无理由退换，运费协商处理</p></div>
+    <div class="g-card"><span class="g-icon">📋</span><div class="g-title">开具发票</div><p class="g-desc">支持增值税普通/专用发票，满足企业采购需求</p></div>
+    <div class="g-card"><span class="g-icon">🏭</span><div class="g-title">工厂直供</div><p class="g-desc">省去中间环节，品质可控，支持来厂考察</p></div>
+    <div class="g-card"><span class="g-icon">📦</span><div class="g-title">安全包装</div><p class="g-desc">贴膜防划 + 多层泡沫 + 纸箱，全程无忧</p></div>
+    <div class="g-card"><span class="g-icon">✎</span><div class="g-title">定制服务</div><p class="g-desc">从设计到落地完整方案，周期明确可追踪</p></div>
+  </div>
+</div>
+
+<div class="cta-section">
+  <div class="cta-title">欢迎咨询与订购</div>
+  <div class="cta-en">We'd love to hear from you</div>
+  <div class="cta-buttons">
+    <a class="btn-primary" href="#">立即购买</a>
+    <a class="btn-secondary" href="#">联系客服定制</a>
+  </div>
+  <div class="cta-note">工作时间 09:00 – 18:00 &nbsp;·&nbsp; 曲阳欧度雕塑工厂</div>
+</div>
+
+<div class="footer">
+  <div class="footer-logo">欧度雕塑</div>
+  <div>曲阳县雕塑工厂直供 · 保留所有权利 © 2025</div>
+</div>
+</body>
+</html>
